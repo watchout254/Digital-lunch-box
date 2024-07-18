@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Order Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Digital Lunchbox | Order Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,6 +33,7 @@
         input, select, button {
             padding: 10px;
             margin: 5px 0 20px;
+            font-size: 1rem;
         }
         button {
             background-color: #28a745;
@@ -42,32 +44,70 @@
         button:hover {
             background-color: #218838;
         }
+        .nav-link {
+            display: block;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px auto;
+                padding: 10px;
+            }
+            input, select, button {
+                padding: 8px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 5px;
+            }
+            input, select, button {
+                padding: 6px;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Digital Lunchbox Order Food</h1>
+        <a class="nav-link" id="nav-link5" href="index.html">Home</a>
         <form id="orderForm">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             
+            <label for="tel">Phone Number:</label>
+            <input type="tel" id="tel" name="tel" required>
+
             <label for="food">Food Item:</label>
             <select id="food" name="food" required>
                 <option value=""></option>
-                <option value="Pizza">githeri + Potatoes + Diced avocado</option>
-                <option value="Burger">Burger</option>
-                <option value="Pasta">Pasta</option>
-                <option value="Salad">Salad</option>
-                <option value="Pilau">Pilau biryani</option>
+                <option value="Kienyeji + Fish wet fry with cornmeal/rice">Kienyeji + Fish wet fry with cornmeal/rice</option>
+                <option value="Beef dry fry with pasta">Beef dry fry with pasta</option>
+                <option value="Githeri + Potatoes + Diced Avocado">Githeri + Potatoes + Diced Avocado</option>
+                <option value="Marinated Chicken with vegetable rice">Marinated Chicken with vegetable rice</option>
+                <option value="Swahili Pilau with Guacamole">Swahili Pilau with Guacamole</option>
+                <option value="Chicken Biryani + Guacamole">Chicken Biryani + Guacamole</option>
+                <option value="lemonade">Lemonade</option>
+                <option value="milkshake">Milkshake</option>
+                <option value="juice">Fresh juice</option>
+                <option value="cocktail">Cocktails</option>
             </select>
 
             <label for="quantity">Quantity:</label>
             <input type="number" id="quantity" name="quantity" min="1" required>
 
-            <label for="Delivery instructions">Delivery instructions:</label>
+            <label for="delivery">Delivery Instructions:</label>
             <input type="text" id="delivery" name="delivery" required>
             
             <button type="submit">Order Now</button>
+
+            <p><b>After delivery be sure to call us and let us know your feedback. Thank you.</b></p>
         </form>
     </div>
 
@@ -79,9 +119,11 @@
 
             const order = {
                 name: orderForm.name.value,
+                tel: orderForm.tel.value,
                 food: orderForm.food.value,
-                quantity: orderForm.quantity.value
-                delivery:orderForm.delivery.value
+                quantity: orderForm.quantity.value,
+                delivery: orderForm.delivery.value,
+                timestamp: new Date().toLocaleString() // Adding current timestamp
             };
 
             // Save order to localStorage
