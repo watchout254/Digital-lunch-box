@@ -107,7 +107,7 @@
             
             <button type="submit">Order Now</button>
 
-            <p>After delivery be sure to call us and let us know your feedback. Thank you.</p>
+            <p><b>After delivery be sure to call us and let us know your feedback. Thank you.</b></p>
         </form>
     </div>
 
@@ -122,7 +122,8 @@
                 tel: orderForm.tel.value,
                 food: orderForm.food.value,
                 quantity: orderForm.quantity.value,
-                delivery: orderForm.delivery.value
+                delivery: orderForm.delivery.value,
+                timestamp: new Date().toLocaleString() // Adding current timestamp
             };
 
             // Save order to localStorage
