@@ -21,6 +21,7 @@
     }
     h1 {
       text-align: center;
+      font-size: 2rem;
     }
     table {
       width: 100%;
@@ -33,18 +34,19 @@
     th, td {
       padding: 12px;
       text-align: left;
+      font-size: 1rem;
     }
     th {
       background-color: #f2f2f2;
     }
-    .delete-btn {
+    .delete-btn, .logout-btn {
       background-color: #e74c3c;
       color: white;
       border: none;
       padding: 5px 10px;
       cursor: pointer;
     }
-    .delete-btn:hover {
+    .delete-btn:hover, .logout-btn:hover {
       background-color: #c0392b;
     }
     .login-container {
@@ -58,12 +60,15 @@
       padding: 20px;
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 300px;
+      width: 100%;
     }
     .login-box input {
       display: block;
       width: 100%;
       margin: 10px 0;
       padding: 10px;
+      font-size: 1rem;
     }
     .login-box button {
       padding: 10px;
@@ -72,9 +77,31 @@
       color: white;
       border: none;
       cursor: pointer;
+      font-size: 1rem;
     }
     .login-box button:hover {
       background-color: #2980b9;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px auto;
+        padding: 10px;
+      }
+      table, th, td {
+        font-size: 0.9rem;
+        padding: 8px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .login-box {
+        padding: 10px;
+      }
+      .login-box input, .login-box button {
+        padding: 8px;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -104,6 +131,7 @@
         <!-- Orders will be displayed here -->
       </tbody>
     </table>
+    <button class="logout-btn" onclick="logout()">Logout</button>
   </div>
 
   <script>
@@ -118,6 +146,12 @@
       } else {
         alert('Incorrect password. Please try again.');
       }
+    }
+
+    function logout() {
+      document.getElementById('orderContainer').style.display = 'none';
+      document.getElementById('loginContainer').style.display = 'flex';
+      document.getElementById('password').value = '';
     }
 
     function loadOrders() {

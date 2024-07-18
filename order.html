@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Lucnhbox |  Order Page</title>
+    <title>Digital Lunchbox | Order Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,6 +32,7 @@
         input, select, button {
             padding: 10px;
             margin: 5px 0 20px;
+            font-size: 1rem;
         }
         button {
             background-color: #28a745;
@@ -42,12 +43,39 @@
         button:hover {
             background-color: #218838;
         }
+        .nav-link {
+            display: block;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px auto;
+                padding: 10px;
+            }
+            input, select, button {
+                padding: 8px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 5px;
+            }
+            input, select, button {
+                padding: 6px;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Digital Lunchbox Order Food</h1>
-        <a class="nav-link custom-nav-link" id="nav-link5" href="index.html">Home </a> 
+        <a class="nav-link" id="nav-link5" href="index.html">Home</a>
         <form id="orderForm">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
@@ -58,11 +86,11 @@
             <label for="food">Food Item:</label>
             <select id="food" name="food" required>
                 <option value=""></option>
-                <option value="Pizza">githeri + Potatoes + Diced avocado</option>
+                <option value="githeri">Githeri + Potatoes + Diced Avocado</option>
                 <option value="Burger">Burger</option>
                 <option value="Pasta">Pasta</option>
                 <option value="Salad">Salad</option>
-                <option value="Pilau">Pilau biryani</option>
+                <option value="Pilau">Pilau Biryani</option>
             </select>
 
             <label for="quantity">Quantity:</label>
@@ -71,10 +99,9 @@
             <label for="delivery">Delivery Instructions:</label>
             <input type="text" id="delivery" name="delivery" required>
             
-            
             <button type="submit">Order Now</button>
 
-            <p>After delivery be sure to call us and let us know your feedback</p>
+            <p>After delivery be sure to call us and let us know your feedback. Thank you.</p>
         </form>
     </div>
 
@@ -86,11 +113,10 @@
 
             const order = {
                 name: orderForm.name.value,
-                tel:orderForm.tel.value,
+                tel: orderForm.tel.value,
                 food: orderForm.food.value,
                 quantity: orderForm.quantity.value,
                 delivery: orderForm.delivery.value
-                
             };
 
             // Save order to localStorage
