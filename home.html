@@ -192,29 +192,105 @@
             <a class="nav-link custom-nav-link" id="nav-link2" href="#sectionWcu">Why Choose Us?</a>
             <a class="nav-link custom-nav-link" id="nav-link3" href="#sectionExplore">Explore Menu</a>
             <a class="nav-link custom-nav-link" id="nav-link4" href="#sectionDeliveryPayments">Delivery & Payments</a>
-            <div id="userDisplay" class="nav-link custom-nav-link user-display"></div>
+            <div id="userDisplay" class="nav-link custom-nav-link user-display" onclick="openModal()">Username</div>
             <style>
                 .user-display {
                     font-size: 1.5em;
                     font-weight: bold;
                     text-align: center;
-                    margin-top: 0; /* Ensure no extra top margin */
-                    margin-left: 20px; /* Add some left margin to separate it from other links */
-                    line-height: 1.5; /* Ensure it aligns vertically with other links */
+                    margin-top: 0;
+                    margin-left: 20px;
+                    line-height: 1.5;
+                    cursor: pointer; /* Pointer cursor for user's name */
                 }
-                
-                /* Optional: Adjust styles for other nav links if needed */
+            
                 .nav-link {
                     display: flex;
-                    align-items: center; /* Center align vertically */
-                    padding: 10px; /* Adjust padding if necessary */
+                    align-items: center;
+                    padding: 10px;
+                }
+            
+                /* Modal styles */
+                .modal {
+                    display: none;
+                    position: fixed;
+                    z-index: 1;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    overflow: auto;
+                    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+                    padding-top: 60px;
+                }
+            
+                modal {
+                    display: none;
+                    position: fixed;
+                    z-index: 1;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    overflow: auto;
+                    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+                    padding-top: 60px;
                 }
                 
+                /* Modal content */
+                .modal-content {
+                    background-color: #fefefe;
+                    margin: 5% auto;
+                    padding: 20px;
+                    border-radius: 10px; /* Rounded corners */
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Drop shadow */
+                    width: 80%;
+                    max-width: 400px; /* Maximum width */
+                    text-align: center; /* Center align content */
+                }
                 
+                /* Close button */
+                .close {
+                    color: #aaa;
+                    float: right;
+                    font-size: 28px;
+                    font-weight: bold;
+                }
+                
+                .close:hover,
+                .close:focus {
+                    color: black;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+                
+                /* Logout button */
+                .logout-btn {
+                    background-color: #d9534f; /* Bootstrap danger color */
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 1em;
+                    transition: background-color 0.3s ease; /* Smooth transition */
+                }
+                
+                .logout-btn:hover {
+                    background-color: #c9302c; /* Darker red on hover */
+                }
+              
             </style> 
         </div>
     </div>
 </nav>
+<div id="userModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+</div>
+
 
 <div class="bg-container">
     <div class="bg-overlay"></div>
@@ -385,5 +461,30 @@
     </div>
 </div>
 <script src="home.js"></script>
+<script>
+    function openModal() {
+        document.getElementById('userModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('userModal').style.display = 'none';
+    }
+
+    function logout() {
+        // Clear user data from local storage
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userPassword');
+        // Redirect to login page
+        window.location.href = 'index.html';
+    }
+
+    // Close the modal when clicking outside of it
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('userModal')) {
+            document.getElementById('userModal').style.display = 'none';
+        }
+    }
+</script>
+
 </body>
 </html>
