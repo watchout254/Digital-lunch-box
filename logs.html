@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    /* Add your styles here */
+  </style>
+</head>
+<body>
+  <form id="loginForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <button type="submit">Login</button>
+  </form>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value;
+      // Simulate successful login
+      if (username) {
+        let loggedInUsers = JSON.parse(localStorage.getItem('loggedInUsers')) || [];
+        if (!loggedInUsers.includes(username)) {
+          loggedInUsers.push(username);
+          localStorage.setItem('loggedInUsers', JSON.stringify(loggedInUsers));
+        }
+        // Redirect to another page or show success message
+        alert('Login successful');
+      }
+    });
+  </script>
+</body>
+</html>

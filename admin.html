@@ -18,7 +18,7 @@
     }
     .container {
       width: 100%;
-      max-width: 800px; /* Increased max-width for better table view */
+      max-width: 800px;
       margin: 50px auto;
       padding: 20px;
       background-color: #fff;
@@ -207,8 +207,11 @@
     <div class="chart-container">
       <canvas id="mostSoldChart"></canvas>
     </div>
-  </div>
 
+    <!-- List of Logged-in Users -->
+    
+  </div>
+  
   <div id="watermark" class="watermark">Digital Lunchbox Admin</div> <!-- Watermark -->
 
   <script>
@@ -224,6 +227,7 @@
         updateVisitCounter(); // Update the visit counter display
         showVisitorInfo(); // Show visitor information
         renderMostSoldItemChart(); // Render most sold item chart
+        loadLoggedInUsers(); // Load and display logged-in users
       } else {
         alert('Incorrect password. Please try again.');
       }
@@ -403,6 +407,17 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    }
+
+    function loadLoggedInUsers() {
+      let users = JSON.parse(localStorage.getItem('loggedInUsers')) || [];
+      const userList = document.getElementById('userList');
+      userList.innerHTML = '';
+      users.forEach(user => {
+        let listItem = document.createElement('li');
+        listItem.textContent = user;
+        userList.appendChild(listItem);
+      });
     }
   </script>
 </body>
