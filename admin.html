@@ -143,6 +143,17 @@
       max-width: 600px;
       margin: auto;
     }
+
+    /* Styles for receipt */
+    #receiptContainer {
+      display: none;
+    }
+    #receiptDetails {
+      margin-bottom: 20px;
+    }
+    .print-btn, .back-btn {
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -150,7 +161,7 @@
     <div class="login-box">
       <h1>Digital Lunchbox Admin</h1>
       <input type="password" id="password" placeholder="Enter password" />
-      <button onclick="login()">Login</button> <br> <br>
+      <button onclick="login()">Login</button>
       <a class="nav-link" id="nav-link5" href="index.html">Home</a>
     </div>
   </div>
@@ -181,6 +192,7 @@
             <th>Quantity</th>
             <th>Delivery</th>
             <th>Delivered</th>
+            <th>Amount to be Paid</th> <!-- New column -->
             <th>Time</th>
             <th>Action</th>
           </tr>
@@ -200,11 +212,36 @@
       <canvas id="mostSoldChart"></canvas>
     </div>
   </div>
-  <div id="watermark" class="watermark">Digital Lunchbox Admin</div>
 
+  <div class="container" id="receiptContainer">
+    <h1>Receipt</h1>
+    <div id="receiptDetails">
+      <!-- Receipt details will be inserted here -->
+    </div>
+    <button class="print-btn" onclick="printReceipt()">Print Receipt</button>
+    <button class="back-btn" onclick="showOrderList()">Back to Orders</button>
+  </div>
+
+  <div id="watermark" class="watermark">Digital Lunchbox Admin</div>
 
   <script>
     const correctPassword = 'Daniel24#';
+    
+    const foodPrices = {
+      "Kienyeji + Fish wet fry with cornmeal/rice": 10,
+      "Beef dry fry with pasta": 12,
+      "Githeri + Potatoes + Diced Avocado": 8,
+      "Marinated Chicken with vegetable rice": 15,
+      "Swahili Pilau with Guacamole": 14,
+      "Chicken Biryani + Guacamole": 16
+    };
+    const drinkPrices = {
+      "Lemonade": 5,
+      "Milkshake": 6,
+      "Fresh juice": 4,
+      "Mocktails": 7
+    };
+    
 
     function login() {
       const password = document.getElementById('password').value;
@@ -232,6 +269,11 @@
       const orderList = document.getElementById('orderList');
       orderList.innerHTML = '';
       orders.forEach((order, index) => {
+        // Extract prices
+        const foodPrice = foodPrices[order.food] || 0;
+        const drinkPrice = drinkPrices[order.drink] || 0;
+        const totalAmount = (foodPrice + drinkPrice) * order.quantity;
+
         let row = document.createElement('tr');
         row.innerHTML = `
           <td>${order.name}</td>
@@ -243,8 +285,10 @@
           <td>
             <input type="checkbox" ${order.delivered ? 'checked' : ''} onclick="toggleDelivered(${index})">
           </td>
+          <td>${totalAmount}</td> <!-- Use calculated totalAmount -->
           <td>${order.timestamp || 'N/A'}</td>
           <td><button class="delete-btn" onclick="deleteOrder(${index})">Delete</button></td>
+          <td><button class="print-btn" onclick="generateReceipt(${index})">Generate Receipt</button></td>
         `;
         orderList.appendChild(row);
       });
@@ -276,7 +320,10 @@
       doc.text("Order List", 10, 10);
       let orders = JSON.parse(localStorage.getItem('orders')) || [];
       orders.forEach((order, index) => {
-        doc.text(`Order ${index + 1}: ${JSON.stringify(order)}`, 10, 20 + (index * 10));
+        const foodPrice = foodPrices[order.food] || 0;
+        const drinkPrice = drinkPrices[order.drink] || 0;
+        const totalAmount = (foodPrice + drinkPrice) * order.quantity;
+        doc.text(`Order ${index + 1}: ${JSON.stringify(order)} | Amount: ${totalAmount}`, 10, 20 + (index * 10));
       });
       doc.save('orders.pdf');
     }
@@ -422,7 +469,45 @@
         }
       });
     }
+
+    function generateReceipt(index) {
+      let orders = JSON.parse(localStorage.getItem('orders')) || [];
+      const order = orders[index];
+      const foodPrice = foodPrices[order.food] || 0;
+      const drinkPrice = drinkPrices[order.drink] || 0;
+      const totalAmount = (foodPrice + drinkPrice) * order.quantity;
+
+      const receiptDetails = `
+        <h3>Digital Lunchbox Receipt</h3>
+        <p><strong>Name:</strong> ${order.name}</p>
+        <p><strong>Phone:</strong> ${order.tel}</p>
+        <p><strong>Food Item:</strong> ${order.food}</p>
+        <p><strong>Drink:</strong> ${order.drink}</p>
+        <p><strong>Quantity:</strong> ${order.quantity}</p>
+        <p><strong>Delivery:</strong> ${order.delivery}</p>
+        <p><strong>Amount Paid:</strong> $${totalAmount}</p>
+        <p><strong>Date & Time:</strong> ${order.timestamp || 'N/A'}</p>
+        <p><strong>All Rights Reserved &copy; 2024, Digital Lunchbox &trade;</strong></p>
+      `;
+      document.getElementById('receiptDetails').innerHTML = receiptDetails;
+      document.getElementById('orderContainer').style.display = 'none';
+      document.getElementById('receiptContainer').style.display = 'block';
+    }
+
+    function printReceipt() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const receiptDetails = document.getElementById('receiptDetails').innerText;
+      doc.text(receiptDetails, 10, 10);
+      doc.save('receipt.pdf');
+    }
+
+    function showOrderList() {
+      document.getElementById('receiptContainer').style.display = 'none';
+      document.getElementById('orderContainer').style.display = 'block';
+    }
+
+    
   </script>
-  
 </body>
 </html>

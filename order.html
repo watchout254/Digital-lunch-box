@@ -74,6 +74,13 @@
             color: #777;
             font-size: 0.9rem;
         }
+        .total-amount {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
 
         /* Responsive Styles */
         @media (max-width: 768px) {
@@ -116,23 +123,22 @@
 
             <label for="food">Food Item:</label>
             <select id="food" name="food" required>
-                <option value="" disabled selected>Select a food item</option>
-                <option value="Kienyeji + Fish wet fry with cornmeal/rice">Kienyeji + Fish wet fry with cornmeal/rice</option>
-                <option value="Beef dry fry with pasta">Beef dry fry with pasta</option>
-                <option value="Githeri + Potatoes + Diced Avocado">Githeri + Potatoes + Diced Avocado</option>
-                <option value="Marinated Chicken with vegetable rice">Marinated Chicken with vegetable rice</option>
-                <option value="Swahili Pilau with Guacamole">Swahili Pilau with Guacamole</option>
-                <option value="Chicken Biryani + Guacamole">Chicken Biryani + Guacamole</option>
-                
+                <option value="" data-price="0" disabled selected>Select a food item</option>
+                <option value="Kienyeji + Fish wet fry with cornmeal/rice" data-price="500">Kienyeji + Fish wet fry with cornmeal/rice - $500</option>
+                <option value="Beef dry fry with pasta" data-price="400">Beef dry fry with pasta - $400</option>
+                <option value="Githeri + Potatoes + Diced Avocado" data-price="350">Githeri + Potatoes + Diced Avocado - $350</option>
+                <option value="Marinated Chicken with vegetable rice" data-price="450">Marinated Chicken with vegetable rice - $450</option>
+                <option value="Swahili Pilau with Guacamole" data-price="420">Swahili Pilau with Guacamole - $420</option>
+                <option value="Chicken Biryani + Guacamole" data-price="480">Chicken Biryani + Guacamole - $480</option>
             </select>
 
             <label for="drink">Drink:</label>
             <select id="drink" name="drink">
-                <option value="" disabled selected>Select a drink</option>
-                <option value="Lemonade">Lemonade</option>
-                <option value="Milkshake">Milkshake</option>
-                <option value="Juice">Fresh juice</option>
-                <option value="Mocktail">Mocktails</option>
+                <option value="" data-price="0" disabled selected>Select a drink</option>
+                <option value="Lemonade" data-price="100">Lemonade - $100</option>
+                <option value="Milkshake" data-price="150">Milkshake - $150</option>
+                <option value="Juice" data-price="120">Fresh juice - $120</option>
+                <option value="Mocktail" data-price="180">Mocktails - $180</option>
             </select>
 
             <label for="quantity">Quantity:</label>
@@ -143,34 +149,52 @@
             
             <button type="submit">Order Now</button>
 
+            <div class="total-amount" id="totalAmount">Total Amount: $0</div>
             <p><b>After delivery be sure to call us and let us know your feedback. Thank you.</b></p>
         </form>
     </div>
 
     <script>
         const orderForm = document.getElementById('orderForm');
+        const totalAmountElem = document.getElementById('totalAmount');
+        const foodSelect = document.getElementById('food');
+        const drinkSelect = document.getElementById('drink');
+        const quantityInput = document.getElementById('quantity');
 
-        orderForm.addEventListener('submit', function(event) {
-            event.preventDefault();
+        function updateTotalAmount() {
+            const foodPrice = parseFloat(foodSelect.selectedOptions[0].getAttribute('data-price')) || 0;
+            const drinkPrice = parseFloat(drinkSelect.selectedOptions[0].getAttribute('data-price')) || 0;
+            const quantity = parseInt(quantityInput.value) || 1;
+            const totalAmount = (foodPrice + drinkPrice) * quantity;
+            totalAmountElem.textContent = `Total Amount: $${totalAmount}`;
+        }
+          
+        foodSelect.addEventListener('change', updateTotalAmount);
+        drinkSelect.addEventListener('change', updateTotalAmount);
+        quantityInput.addEventListener('input', updateTotalAmount);
 
+        orderForm.addEventListener('submit', function(e) {
+            e.preventDefault();
             const order = {
-                name: orderForm.name.value,
-                tel: orderForm.tel.value,
-                food: orderForm.food.value,
-                drink: orderForm.drink.value,
-                quantity: orderForm.quantity.value,
-                delivery: orderForm.delivery.value,
-                timestamp: new Date().toLocaleString() // Adding current timestamp
+              name: document.getElementById('name').value,
+              tel: document.getElementById('tel').value,
+              food: foodSelect.value,
+              drink: drinkSelect.value,
+              quantity: parseInt(quantityInput.value),
+              delivery: document.getElementById('delivery').value,
+              totalAmount: totalAmountElem.textContent.replace('Total Amount: $', ''),
+              timestamp: new Date().toISOString()
             };
-
-            // Save order to localStorage
-            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
             orders.push(order);
             localStorage.setItem('orders', JSON.stringify(orders));
-
             alert('Order placed successfully!');
             orderForm.reset();
-        });
+            updateTotalAmount(); // Reset total amount display
+          });
+          
+        // Initialize total amount on page load
+        updateTotalAmount();
     </script>
 </body>
 </html>
