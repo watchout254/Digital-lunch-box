@@ -106,7 +106,7 @@
 <body>
     <div class="container">
         <h1>Digital Lunchbox Order Food</h1>
-        <a class="nav-link" id="nav-link5" href="home.html">Home</a>
+        <a class="nav-link" id="nav-link5" href="index.html">Home</a>
         <form id="orderForm">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
@@ -123,9 +123,15 @@
                 <option value="Marinated Chicken with vegetable rice">Marinated Chicken with vegetable rice</option>
                 <option value="Swahili Pilau with Guacamole">Swahili Pilau with Guacamole</option>
                 <option value="Chicken Biryani + Guacamole">Chicken Biryani + Guacamole</option>
-                <option value="lemonade">Lemonade</option>
-                <option value="milkshake">Milkshake</option>
-                <option value="juice">Fresh juice</option>
+                
+            </select>
+
+            <label for="drink">Drink:</label>
+            <select id="drink" name="drink">
+                <option value="" disabled selected>Select a drink</option>
+                <option value="Lemonade">Lemonade</option>
+                <option value="Milkshake">Milkshake</option>
+                <option value="Juice">Fresh juice</option>
                 <option value="Mocktail">Mocktails</option>
             </select>
 
@@ -151,6 +157,7 @@
                 name: orderForm.name.value,
                 tel: orderForm.tel.value,
                 food: orderForm.food.value,
+                drink: orderForm.drink.value,
                 quantity: orderForm.quantity.value,
                 delivery: orderForm.delivery.value,
                 timestamp: new Date().toLocaleString() // Adding current timestamp
