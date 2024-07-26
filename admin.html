@@ -478,7 +478,7 @@
       const totalAmount = (foodPrice + drinkPrice) * order.quantity;
 
       const receiptDetails = `
-        <h3>Receipt</h3>
+        <h3>Digital Lunchbox Receipt</h3>
         <p><strong>Name:</strong> ${order.name}</p>
         <p><strong>Phone:</strong> ${order.tel}</p>
         <p><strong>Food Item:</strong> ${order.food}</p>
@@ -487,6 +487,7 @@
         <p><strong>Delivery:</strong> ${order.delivery}</p>
         <p><strong>Amount Paid:</strong> $${totalAmount}</p>
         <p><strong>Date & Time:</strong> ${order.timestamp || 'N/A'}</p>
+        <p><strong>All Rights Reserved &copy; 2024, Digital Lunchbox &trade;</strong></p>
       `;
       document.getElementById('receiptDetails').innerHTML = receiptDetails;
       document.getElementById('orderContainer').style.display = 'none';
