@@ -124,21 +124,21 @@
             <label for="food">Food Item:</label>
             <select id="food" name="food" required>
                 <option value="" data-price="0" disabled selected>Select a food item</option>
-                <option value="Kienyeji + Fish wet fry with cornmeal/rice" data-price="500">Kienyeji + Fish wet fry with cornmeal/rice - $500</option>
-                <option value="Beef dry fry with pasta" data-price="400">Beef dry fry with pasta - $400</option>
-                <option value="Githeri + Potatoes + Diced Avocado" data-price="350">Githeri + Potatoes + Diced Avocado - $350</option>
-                <option value="Marinated Chicken with vegetable rice" data-price="450">Marinated Chicken with vegetable rice - $450</option>
-                <option value="Swahili Pilau with Guacamole" data-price="420">Swahili Pilau with Guacamole - $420</option>
-                <option value="Chicken Biryani + Guacamole" data-price="480">Chicken Biryani + Guacamole - $480</option>
+                <option value="Kienyeji + Fish wet fry with cornmeal/rice" data-price="500">Kienyeji + Fish wet fry with cornmeal/rice - KES 500</option>
+                <option value="Beef dry fry with pasta" data-price="400">Beef dry fry with pasta - KES 400</option>
+                <option value="Githeri + Potatoes + Diced Avocado" data-price="350">Githeri + Potatoes + Diced Avocado - KES 350</option>
+                <option value="Marinated Chicken with vegetable rice" data-price="450">Marinated Chicken with vegetable rice - KES 450</option>
+                <option value="Swahili Pilau with Guacamole" data-price="420">Swahili Pilau with Guacamole - KES 420</option>
+                <option value="Chicken Biryani + Guacamole" data-price="480">Chicken Biryani + Guacamole - KES 480</option>
             </select>
 
             <label for="drink">Drink:</label>
             <select id="drink" name="drink">
                 <option value="" data-price="0" disabled selected>Select a drink</option>
-                <option value="Lemonade" data-price="100">Lemonade - $100</option>
-                <option value="Milkshake" data-price="150">Milkshake - $150</option>
-                <option value="Juice" data-price="120">Fresh juice - $120</option>
-                <option value="Mocktail" data-price="180">Mocktails - $180</option>
+                <option value="Lemonade" data-price="100">Lemonade - KES 100</option>
+                <option value="Milkshake" data-price="150">Milkshake - KES 150</option>
+                <option value="Juice" data-price="120">Fresh juice - KES 120</option>
+                <option value="Mocktail" data-price="180">Mocktails - KES 180</option>
             </select>
 
             <label for="quantity">Quantity:</label>
@@ -149,7 +149,7 @@
             
             <button type="submit">Order Now</button>
 
-            <div class="total-amount" id="totalAmount">Total Amount: $0</div>
+            <div class="total-amount" id="totalAmount">Total Amount: KES 0</div>
             <p><b>After delivery be sure to call us and let us know your feedback. Thank you.</b></p>
         </form>
     </div>
@@ -166,7 +166,7 @@
             const drinkPrice = parseFloat(drinkSelect.selectedOptions[0].getAttribute('data-price')) || 0;
             const quantity = parseInt(quantityInput.value) || 1;
             const totalAmount = (foodPrice + drinkPrice) * quantity;
-            totalAmountElem.textContent = `Total Amount: $${totalAmount}`;
+            totalAmountElem.textContent = `Total Amount: KES ${totalAmount}`;
         }
           
         foodSelect.addEventListener('change', updateTotalAmount);
@@ -182,7 +182,7 @@
               drink: drinkSelect.value,
               quantity: parseInt(quantityInput.value),
               delivery: document.getElementById('delivery').value,
-              totalAmount: totalAmountElem.textContent.replace('Total Amount: $', ''),
+              totalAmount: totalAmountElem.textContent.replace('Total Amount: KES ', ''),
               timestamp: new Date().toISOString()
             };
             const orders = JSON.parse(localStorage.getItem('orders')) || [];
