@@ -265,34 +265,53 @@
     }
 
     function loadOrders() {
-      let orders = JSON.parse(localStorage.getItem('orders')) || [];
-      const orderList = document.getElementById('orderList');
-      orderList.innerHTML = '';
-      orders.forEach((order, index) => {
-        // Extract prices
-        const foodPrice = foodPrices[order.food] || 0;
-        const drinkPrice = drinkPrices[order.drink] || 0;
-        const totalAmount = (foodPrice + drinkPrice) * order.quantity;
-
-        let row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${order.name}</td>
-          <td>${order.tel}</td>
-          <td>${order.food}</td>
-          <td>${order.drink}</td>
-          <td>${order.quantity}</td>
-          <td>${order.delivery}</td>
-          <td>
-            <input type="checkbox" ${order.delivered ? 'checked' : ''} onclick="toggleDelivered(${index})">
-          </td>
-          <td>${totalAmount}</td> <!-- Use calculated totalAmount -->
-          <td>${order.timestamp || 'N/A'}</td>
-          <td><button class="delete-btn" onclick="deleteOrder(${index})">Delete</button></td>
-          <td><button class="print-btn" onclick="generateReceipt(${index})">Generate Receipt</button></td>
-        `;
-        orderList.appendChild(row);
+      fetch('http://localhost:3000/api/orders')
+        .then(response => response.json())
+        .then(orders => {
+          const orderList = document.getElementById('orderList');
+          orderList.innerHTML = '';
+          orders.forEach((order, index) => {
+            const foodPrice = foodPrices[order.food] || 0;
+            const drinkPrice = drinkPrices[order.drink] || 0;
+            const totalAmount = (foodPrice + drinkPrice) * order.quantity;
+            let row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${order.name}</td>
+              <td>${order.tel}</td>
+              <td>${order.food}</td>
+              <td>${order.drink}</td>
+              <td>${order.quantity}</td>
+              <td>${order.delivery}</td>
+              <td>
+                <input type="checkbox" ${order.delivered ? 'checked' : ''} onclick="toggleDelivered(${index})">
+              </td>
+              <td>${totalAmount}</td>
+              <td>${order.timestamp || 'N/A'}</td>
+              <td><button class="delete-btn" onclick="deleteOrder(${index})">Delete</button></td>
+            `;
+            orderList.appendChild(row);
+          });
+        });
+    }
+    
+    function saveOrder(order) {
+      fetch('http://localhost:3000/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(order)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Order saved:', data);
+        loadOrders();
+      })
+      .catch(error => {
+        console.error('Error saving order:', error);
       });
     }
+    
 
     function toggleDelivered(index) {
       let orders = JSON.parse(localStorage.getItem('orders')) || [];
