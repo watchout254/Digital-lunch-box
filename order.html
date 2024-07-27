@@ -114,7 +114,7 @@
     <div class="container">
         <h1>Digital Lunchbox Order Food</h1>
         <a class="nav-link" id="nav-link5" href="index.html">Home</a>
-        <form id="orderForm">
+        <form id="orderForm" action="submit_order.php" method="POST">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             
@@ -124,21 +124,21 @@
             <label for="food">Food Item:</label>
             <select id="food" name="food" required>
                 <option value="" data-price="0" disabled selected>Select a food item</option>
-                <option value="Kienyeji + Fish wet fry with cornmeal/rice" data-price="500">Kienyeji + Fish wet fry with cornmeal/rice - $500</option>
-                <option value="Beef dry fry with pasta" data-price="400">Beef dry fry with pasta - $400</option>
-                <option value="Githeri + Potatoes + Diced Avocado" data-price="350">Githeri + Potatoes + Diced Avocado - $350</option>
-                <option value="Marinated Chicken with vegetable rice" data-price="450">Marinated Chicken with vegetable rice - $450</option>
-                <option value="Swahili Pilau with Guacamole" data-price="420">Swahili Pilau with Guacamole - $420</option>
-                <option value="Chicken Biryani + Guacamole" data-price="480">Chicken Biryani + Guacamole - $480</option>
+                <option value="Kienyeji + Fish wet fry with cornmeal/rice" data-price="500">Kienyeji + Fish wet fry with cornmeal/rice - KES 500</option>
+                <option value="Beef dry fry with pasta" data-price="400">Beef dry fry with pasta - KES 400</option>
+                <option value="Githeri + Potatoes + Diced Avocado" data-price="350">Githeri + Potatoes + Diced Avocado - KES 350</option>
+                <option value="Marinated Chicken with vegetable rice" data-price="450">Marinated Chicken with vegetable rice - KES 450</option>
+                <option value="Swahili Pilau with Guacamole" data-price="420">Swahili Pilau with Guacamole - KES 420</option>
+                <option value="Chicken Biryani + Guacamole" data-price="480">Chicken Biryani + Guacamole - KES 480</option>
             </select>
 
             <label for="drink">Drink:</label>
             <select id="drink" name="drink">
                 <option value="" data-price="0" disabled selected>Select a drink</option>
-                <option value="Lemonade" data-price="100">Lemonade - $100</option>
-                <option value="Milkshake" data-price="150">Milkshake - $150</option>
-                <option value="Juice" data-price="120">Fresh juice - $120</option>
-                <option value="Mocktail" data-price="180">Mocktails - $180</option>
+                <option value="Lemonade" data-price="100">Lemonade - KES 100</option>
+                <option value="Milkshake" data-price="150">Milkshake - KES 150</option>
+                <option value="Juice" data-price="120">Fresh juice - KES 120</option>
+                <option value="Mocktail" data-price="180">Mocktails - KES 180</option>
             </select>
 
             <label for="quantity">Quantity:</label>
@@ -147,26 +147,29 @@
             <label for="delivery">Delivery Instructions:</label>
             <input type="text" id="delivery" name="delivery" required>
             
+            <input type="hidden" id="totalAmount" name="totalAmount">
             <button type="submit">Order Now</button>
 
-            <div class="total-amount" id="totalAmount">Total Amount: $0</div>
+            <div class="total-amount" id="totalAmountDisplay">Total Amount: KES 0</div>
             <p><b>After delivery be sure to call us and let us know your feedback. Thank you.</b></p>
         </form>
     </div>
 
     <script>
         const orderForm = document.getElementById('orderForm');
-        const totalAmountElem = document.getElementById('totalAmount');
+        const totalAmountElem = document.getElementById('totalAmountDisplay');
         const foodSelect = document.getElementById('food');
         const drinkSelect = document.getElementById('drink');
         const quantityInput = document.getElementById('quantity');
+        const totalAmountInput = document.getElementById('totalAmount');
 
         function updateTotalAmount() {
             const foodPrice = parseFloat(foodSelect.selectedOptions[0].getAttribute('data-price')) || 0;
             const drinkPrice = parseFloat(drinkSelect.selectedOptions[0].getAttribute('data-price')) || 0;
             const quantity = parseInt(quantityInput.value) || 1;
             const totalAmount = (foodPrice + drinkPrice) * quantity;
-            totalAmountElem.textContent = `Total Amount: $${totalAmount}`;
+            totalAmountElem.textContent = `Total Amount: KES ${totalAmount}`;
+            totalAmountInput.value = totalAmount;
         }
           
         foodSelect.addEventListener('change', updateTotalAmount);
@@ -174,25 +177,9 @@
         quantityInput.addEventListener('input', updateTotalAmount);
 
         orderForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const order = {
-              name: document.getElementById('name').value,
-              tel: document.getElementById('tel').value,
-              food: foodSelect.value,
-              drink: drinkSelect.value,
-              quantity: parseInt(quantityInput.value),
-              delivery: document.getElementById('delivery').value,
-              totalAmount: totalAmountElem.textContent.replace('Total Amount: $', ''),
-              timestamp: new Date().toISOString()
-            };
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
-            orders.push(order);
-            localStorage.setItem('orders', JSON.stringify(orders));
-            alert('Order placed successfully!');
-            orderForm.reset();
-            updateTotalAmount(); // Reset total amount display
-          });
-          
+            updateTotalAmount();
+        });
+
         // Initialize total amount on page load
         updateTotalAmount();
     </script>

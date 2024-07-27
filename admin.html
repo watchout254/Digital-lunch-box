@@ -228,18 +228,18 @@
     const correctPassword = 'Daniel24#';
     
     const foodPrices = {
-      "Kienyeji + Fish wet fry with cornmeal/rice": 10,
-      "Beef dry fry with pasta": 12,
-      "Githeri + Potatoes + Diced Avocado": 8,
-      "Marinated Chicken with vegetable rice": 15,
-      "Swahili Pilau with Guacamole": 14,
-      "Chicken Biryani + Guacamole": 16
+      "Kienyeji + Fish wet fry with cornmeal/rice": 500,
+      "Beef dry fry with pasta": 400,
+      "Githeri + Potatoes + Diced Avocado": 350,
+      "Marinated Chicken with vegetable rice": 450,
+      "Swahili Pilau with Guacamole": 420,
+      "Chicken Biryani + Guacamole": 480
     };
     const drinkPrices = {
-      "Lemonade": 5,
-      "Milkshake": 6,
-      "Fresh juice": 4,
-      "Mocktails": 7
+      "Lemonade": 100,
+      "Milkshake": 150,
+      "Fresh juice": 120,
+      "Mocktails": 180
     };
     
 
@@ -265,34 +265,53 @@
     }
 
     function loadOrders() {
-      let orders = JSON.parse(localStorage.getItem('orders')) || [];
-      const orderList = document.getElementById('orderList');
-      orderList.innerHTML = '';
-      orders.forEach((order, index) => {
-        // Extract prices
-        const foodPrice = foodPrices[order.food] || 0;
-        const drinkPrice = drinkPrices[order.drink] || 0;
-        const totalAmount = (foodPrice + drinkPrice) * order.quantity;
-
-        let row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${order.name}</td>
-          <td>${order.tel}</td>
-          <td>${order.food}</td>
-          <td>${order.drink}</td>
-          <td>${order.quantity}</td>
-          <td>${order.delivery}</td>
-          <td>
-            <input type="checkbox" ${order.delivered ? 'checked' : ''} onclick="toggleDelivered(${index})">
-          </td>
-          <td>${totalAmount}</td> <!-- Use calculated totalAmount -->
-          <td>${order.timestamp || 'N/A'}</td>
-          <td><button class="delete-btn" onclick="deleteOrder(${index})">Delete</button></td>
-          <td><button class="print-btn" onclick="generateReceipt(${index})">Generate Receipt</button></td>
-        `;
-        orderList.appendChild(row);
+      fetch('http://localhost:3000/api/orders')
+        .then(response => response.json())
+        .then(orders => {
+          const orderList = document.getElementById('orderList');
+          orderList.innerHTML = '';
+          orders.forEach((order, index) => {
+            const foodPrice = foodPrices[order.food] || 0;
+            const drinkPrice = drinkPrices[order.drink] || 0;
+            const totalAmount = (foodPrice + drinkPrice) * order.quantity;
+            let row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${order.name}</td>
+              <td>${order.tel}</td>
+              <td>${order.food}</td>
+              <td>${order.drink}</td>
+              <td>${order.quantity}</td>
+              <td>${order.delivery}</td>
+              <td>
+                <input type="checkbox" ${order.delivered ? 'checked' : ''} onclick="toggleDelivered(${index})">
+              </td>
+              <td>${totalAmount}</td>
+              <td>${order.timestamp || 'N/A'}</td>
+              <td><button class="delete-btn" onclick="deleteOrder(${index})">Delete</button></td>
+            `;
+            orderList.appendChild(row);
+          });
+        });
+    }
+    
+    function saveOrder(order) {
+      fetch('http://localhost:3000/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(order)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Order saved:', data);
+        loadOrders();
+      })
+      .catch(error => {
+        console.error('Error saving order:', error);
       });
     }
+    
 
     function toggleDelivered(index) {
       let orders = JSON.parse(localStorage.getItem('orders')) || [];
@@ -479,14 +498,14 @@
 
       const receiptDetails = `
         <h3>Digital Lunchbox Receipt</h3>
-        <p><strong>Name:</strong> ${order.name}</p>
-        <p><strong>Phone:</strong> ${order.tel}</p>
-        <p><strong>Food Item:</strong> ${order.food}</p>
-        <p><strong>Drink:</strong> ${order.drink}</p>
-        <p><strong>Quantity:</strong> ${order.quantity}</p>
-        <p><strong>Delivery:</strong> ${order.delivery}</p>
-        <p><strong>Amount Paid:</strong> $${totalAmount}</p>
-        <p><strong>Date & Time:</strong> ${order.timestamp || 'N/A'}</p>
+        <p><strong><b>NAME:</b></strong> ${order.name}</p>
+        <p><strong><b>PHONE:</b></strong> ${order.tel}</p>
+        <p><strong><b>FOOD ITEM:</b></strong> ${order.food}</p>
+        <p><strong><b>DRINK:</b></strong> ${order.drink}</p>
+        <p><strong><b>QUANTITY:</b></strong> ${order.quantity}</p>
+        <p><strong><b>DELIVERY:</b></strong> ${order.delivery}</p>
+        <p><strong><b>AMOUNT PAID:</b></strong> KES ${totalAmount}</p>
+        <p><strong><b>DATE & TIME:</b></strong> ${order.timestamp || 'N/A'}</p>
         <p><strong>All Rights Reserved &copy; 2024, Digital Lunchbox &trade;</strong></p>
       `;
       document.getElementById('receiptDetails').innerHTML = receiptDetails;
@@ -497,10 +516,48 @@
     function printReceipt() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-      const receiptDetails = document.getElementById('receiptDetails').innerText;
-      doc.text(receiptDetails, 10, 10);
-      doc.save('receipt.pdf');
+    
+      // Create a watermark image
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = 210;  // A4 size width in mm
+      canvas.height = 297; // A4 size height in mm
+      
+      ctx.fillStyle = 'rgba(139, 0, 0, 0.1)'; // Red color with transparency
+      ctx.font = 'bold 48px Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate(-Math.PI / 4);
+      ctx.fillText('PAID', 0, 0);
+      
+      const watermarkImage = canvas.toDataURL('image/png');
+      
+      // Add watermark to PDF
+      doc.addImage(watermarkImage, 'PNG', 0, 0, 210, 297, undefined, 'FAST');
+      
+      // Center align text
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("Digital Lunchbox Receipt", 105, 30, { align: "center" });
+    
+      const receiptDetails = document.getElementById('receiptDetails').innerText.split('\n');
+      let yPosition = 40;
+      receiptDetails.forEach(line => {
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "normal");
+        doc.text(line, 105, yPosition, { align: "center" });
+        yPosition += 10;
+      });
+    
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "bold");
+      doc.text("All Rights Reserved © 2024, Digital Lunchbox ™", 105, yPosition + 10, { align: "center" });
+    
+      doc.save('clientreceipt.pdf');
     }
+    
+    
 
     function showOrderList() {
       document.getElementById('receiptContainer').style.display = 'none';
