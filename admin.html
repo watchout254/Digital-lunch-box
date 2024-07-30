@@ -26,6 +26,29 @@
       text-align: center;
       font-size: 2rem;
     }
+    .styled-button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.3s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .styled-button:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+  }
+
+  .styled-button:active {
+      background-color: #004085;
+      transform: translateY(0);
+  }
     .delete-btn, .logout-btn, .print-btn, .download-btn {
       background-color: #e74c3c;
       color: white;
@@ -167,60 +190,13 @@
   </div>
 
   <div class="container" id="orderContainer" style="display: none;">
-    <h1>Order List</h1>
+    <h1>Admin Panel</h1>
     <button class="logout-btn" onclick="logout()">Logout</button>
     <button class="print-btn" onclick="printOrders()">Print</button>
-    <a href="view_orders.php">View orders</a>
-    <span id="visitCounter" class="visit-counter">Visits: 0</span>
-    <div id="visitorInfo" class="visitor-info"></div>
-    <div class="search-container">
-      <input type="text" id="searchInput" onkeyup="searchOrders()" placeholder="Search for orders...">
-    </div>
-    <div class="status-filter">
-      <label><input type="radio" name="statusFilter" value="all" checked onchange="filterOrders(this)"> All</label>
-      <label><input type="radio" name="statusFilter" value="delivered" onchange="filterOrders(this)"> Delivered</label>
-      <label><input type="radio" name="statusFilter" value="pending" onchange="filterOrders(this)"> Pending</label>
-    </div>
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Tel</th>
-            <th>Food Item</th>
-            <th>Drink</th>
-            <th>Quantity</th>
-            <th>Delivery</th>
-            <th>Delivered</th>
-            <th>Amount to be Paid</th> <!-- New column -->
-            <th>Time</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="orderList">
-        </tbody>
-      </table>
-    </div>
-
-    <div class="chart-container">
-      <canvas id="mostSoldFoodChart"></canvas>
-    </div>
-    <div class="chart-container">
-      <canvas id="mostSoldDrinkChart"></canvas>
-    </div>
-    <div class="chart-container">
-      <canvas id="mostSoldChart"></canvas>
-    </div>
+    <a href="view_orders.php" class="styled-button">View orders</a>
+   
   </div>
 
-  <div class="container" id="receiptContainer">
-    <h1>Receipt</h1>
-    <div id="receiptDetails">
-      <!-- Receipt details will be inserted here -->
-    </div>
-    <button class="print-btn" onclick="printReceipt()">Print Receipt</button>
-    <button class="back-btn" onclick="showOrderList()">Back to Orders</button>
-  </div>
 
   <div id="watermark" class="watermark">Digital Lunchbox Admin</div>
 

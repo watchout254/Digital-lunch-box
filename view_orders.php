@@ -37,7 +37,10 @@ $conn->close();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>Digital Lunchbox Admin</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+
+
+    <title>Digital Lunchbox | View Orders</title>
     <style>
     /* Existing styles */
     body {
@@ -64,7 +67,8 @@ $conn->close();
     .delete-btn,
     .logout-btn,
     .print-btn,
-    .download-btn {
+    .download-btn,
+    .receipt-btn {
         background-color: #e74c3c;
         color: white;
         border: none;
@@ -75,8 +79,33 @@ $conn->close();
     .delete-btn:hover,
     .logout-btn:hover,
     .print-btn:hover,
-    .download-btn:hover {
+    .download-btn:hover,
+    .receipt-btn:hover {
         background-color: #c0392b;
+    }
+
+    .styled-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s, transform 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .styled-button:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    .styled-button:active {
+        background-color: #004085;
+        transform: translateY(0);
     }
 
     /* More existing styles */
@@ -86,10 +115,11 @@ $conn->close();
 <body>
     <div class="container">
         <h1>Order List</h1>
-        <button class="logout-btn" onclick="logout()">Logout</button>
+        <!--<button class="logout-btn" onclick="logout()">Logout</button>-->
         <button class="print-btn" onclick="printOrders()">Print</button>
         <button class="download-btn" onclick="downloadOrders()">Download</button>
-        <span id="visitCounter" class="visit-counter">Visits: 0</span>
+        <a href="admin.html" class="styled-button">Admin panel</a>
+        <!--<span id="visitCounter" class="visit-counter">Visits: 0</span>-->
         <div id="visitorInfo" class="visitor-info"></div>
         <div class="search-container">
             <input type="text" id="searchInput" onkeyup="searchOrders()" placeholder="Search for orders...">
@@ -133,31 +163,16 @@ $conn->close();
                         </td>
                         <td><?= htmlspecialchars($order['total_amount']) ?></td>
                         <td><?= htmlspecialchars($order['timestamp']) ?></td>
-                        <td><button class="delete-btn" onclick="deleteOrder(<?= $index ?>)">Delete</button></td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteOrder(<?= $index ?>)">Delete</button>
+                            <button class="receipt-btn" onclick="generateReceipt(<?= $index ?>)">Generate
+                                Receipt</button>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
-
-        <div class="chart-container">
-            <canvas id="mostSoldFoodChart"></canvas>
-        </div>
-        <div class="chart-container">
-            <canvas id="mostSoldDrinkChart"></canvas>
-        </div>
-        <div class="chart-container">
-            <canvas id="mostSoldChart"></canvas>
-        </div>
-    </div>
-
-    <div class="container" id="receiptContainer" style="display: none;">
-        <h1>Receipt</h1>
-        <div id="receiptDetails">
-            <!-- Receipt details will be inserted here -->
-        </div>
-        <button class="print-btn" onclick="printReceipt()">Print Receipt</button>
-        <button class="back-btn" onclick="showOrderList()">Back to Orders</button>
     </div>
 
     <div id="watermark" class="watermark">Digital Lunchbox Admin</div>
@@ -171,13 +186,24 @@ $conn->close();
         "Githeri + Potatoes + Diced Avocado": 350,
         "Marinated Chicken with vegetable rice": 450,
         "Swahili Pilau with Guacamole": 420,
-        "Chicken Biryani + Guacamole": 480
+        "Chicken Biryani + Guacamole": 480,
+        "Pork & Fries": 450,
+        "Arrowroots boiled": 150,
+        "Sweetpotatoes": 100,
+        "French toast": 170,
+        "Spanish": 150,
+        "Pancakes": 50,
+        "Sausages/Smokies": 50,
+        "Samosa": 70
     };
     const drinkPrices = {
         "Lemonade": 100,
         "Milkshake": 150,
         "Fresh juice": 120,
-        "Mocktails": 180
+        "Mocktails": 180,
+        "Tea": 100,
+        "Brewed Coffee": 100,
+        "White coffee": 200
     };
 
     function login() {
@@ -213,19 +239,22 @@ $conn->close();
                     const totalAmount = (foodPrice + drinkPrice) * order.quantity;
                     let row = document.createElement('tr');
                     row.innerHTML = `
-              <td>${order.customer_name}</td>
-              <td>${order.phone_number}</td>
-              <td>${order.food_item}</td>
-              <td>${order.drink_item}</td>
-              <td>${order.quantity}</td>
-              <td>${order.delivery_instructions}</td>
-              <td>
-                <input type="checkbox" ${order.delivered ? 'checked' : ''} onclick="toggleDelivered(${index})">
-              </td>
-              <td>${totalAmount}</td>
-              <td>${order.timestamp || 'N/A'}</td>
-              <td><button class="delete-btn" onclick="deleteOrder(${index})">Delete</button></td>
-            `;
+                          <td>${order.customer_name}</td>
+                          <td>${order.phone_number}</td>
+                          <td>${order.food_item}</td>
+                          <td>${order.drink_item}</td>
+                          <td>${order.quantity}</td>
+                          <td>${order.delivery_instructions}</td>
+                          <td>
+                              <input type="checkbox" ${order.delivered ? 'checked' : ''} onclick="toggleDelivered(${index})">
+                          </td>
+                          <td>${totalAmount}</td>
+                          <td>${order.timestamp || 'N/A'}</td>
+                          <td>
+                              <button class="delete-btn" onclick="deleteOrder(${index})">Delete</button>
+                              <button class="receipt-btn" onclick="generateReceipt(${index})">Generate Receipt</button>
+                          </td>
+                        `;
                     orderList.appendChild(row);
                 });
             });
@@ -305,6 +334,43 @@ $conn->close();
         a.download = 'orders.html';
         a.click();
         URL.revokeObjectURL(url);
+    }
+
+    async function generateReceipt(index) {
+        const {
+            jsPDF
+        } = window.jspdf;
+        const orderList = document.getElementById('orderList');
+        const row = orderList.children[index];
+        const order = {
+            customer_name: row.children[0].innerText,
+            phone_number: row.children[1].innerText,
+            food_item: row.children[2].innerText,
+            drink_item: row.children[3].innerText,
+            quantity: row.children[4].innerText,
+            delivery_instructions: row.children[5].innerText,
+            total_amount: row.children[7].innerText,
+            timestamp: row.children[8].innerText
+        };
+
+        const doc = new jsPDF();
+
+        doc.text(`Customer Name: ${order.customer_name}`, 10, 10);
+        doc.text(`Phone Number: ${order.phone_number}`, 10, 20);
+        doc.text(`Food Item: ${order.food_item}`, 10, 30);
+        doc.text(`Drink Item: ${order.drink_item}`, 10, 40);
+        doc.text(`Quantity: ${order.quantity}`, 10, 50);
+        doc.text(`Delivery Instructions: ${order.delivery_instructions}`, 10, 60);
+        doc.text(`Total Amount: ${order.total_amount}`, 10, 70);
+        doc.text(`Timestamp: ${order.timestamp}`, 10, 80);
+
+        doc.setFontSize(40);
+        doc.setTextColor(255, 0, 0);
+        doc.text('Paid', 150, 50, {
+            angle: -45
+        });
+
+        doc.save('receipt.pdf');
     }
 
     function renderMostSoldCharts() {
