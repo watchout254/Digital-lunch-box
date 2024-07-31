@@ -277,26 +277,22 @@ $conn->close();
 
     function deleteOrder(index) {
         if (confirm('Are you sure you want to delete this order?')) {
-            fetch('delete_order.php', {
-                    method: 'POST',
+            fetch('view_orders.php', {
+                    method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        index: index
+                        index
                     })
                 })
                 .then(response => response.json())
                 .then(data => {
-                    alert(data.message);
+                    console.log(data.message);
                     loadOrders();
-                })
-                .catch(error => {
-                    console.error('Error deleting order:', error);
                 });
         }
     }
-
 
     function toggleDelivered(index) {
         const orderList = document.getElementById('orderList');
@@ -335,7 +331,7 @@ $conn->close();
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'orders.html';
+        a.download = 'orders.php';
         a.click();
         URL.revokeObjectURL(url);
     }
@@ -377,27 +373,11 @@ $conn->close();
         doc.save('receipt.pdf');
     }
 
-    function renderMostSoldCharts() {
-        // Add Chart.js code for rendering most sold food and drink charts here
-    }
+  
 
-    function updateVisitCounter() {
-        fetch('view_orders.php', {
-                method: 'GET'
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('visitCounter').innerText = `Visits: ${data.visits}`;
-            });
-    }
 
-    function showVisitorInfo() {
-        fetch('view_orders.php')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('visitorInfo').innerText = `Last Visit: ${data.lastVisit}`;
-            });
-    }
+
+
 
     function searchOrders() {
         const input = document.getElementById('searchInput').value.toLowerCase();

@@ -185,7 +185,7 @@
       <h1>Digital Lunchbox Admin</h1>
       <input type="password" id="password" placeholder="Enter password" />
       <button onclick="login()">Login</button>
-      <a class="nav-link" id="nav-link5" href="index.html">Home</a>
+      <a class="nav-link" id="nav-link5" href="index.php">Home</a>
     </div>
   </div>
 

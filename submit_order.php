@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         // Redirect to a thank you page or display a confirmation message
-        header("Location: thank_you.html"); // Ensure this file exists
+        header("Location: thank_you.php"); // Ensure this file exists
         exit();
     } else {
         // Display error message if something went wrong
