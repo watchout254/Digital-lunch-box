@@ -2,10 +2,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 0); // Hide errors in production
 
-$servername = "localhost";
-$username = "root"; // replace with your MySQL username
-$password = ""; // replace with your MySQL password
-$dbname = "orders_db"; // replace with your database name
+$servername = "sql303.infinityfree.com";
+    $username = "if0_37012884";
+    $password = "3YzqZOmtfg"; // Replace with your actual password
+    $dbname = "if0_37012884_orders_db";// replace with your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -38,7 +38,6 @@ $conn->close();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-
 
     <title>Digital Lunchbox | View Orders</title>
     <style>
@@ -118,7 +117,7 @@ $conn->close();
         <!--<button class="logout-btn" onclick="logout()">Logout</button>-->
         <button class="print-btn" onclick="printOrders()">Print</button>
         <button class="download-btn" onclick="downloadOrders()">Download</button>
-        <a href="admin.html" class="styled-button">Admin panel</a>
+        <a href="admin.php" class="styled-button">Admin panel</a>
         <!--<span id="visitCounter" class="visit-counter">Visits: 0</span>-->
         <div id="visitorInfo" class="visitor-info"></div>
         <div class="search-container">
@@ -151,20 +150,20 @@ $conn->close();
                 <tbody id="orderList">
                     <?php foreach ($orders as $index => $order): ?>
                     <tr>
-                        <td><?= htmlspecialchars($order['customer_name']) ?></td>
-                        <td><?= htmlspecialchars($order['phone_number']) ?></td>
-                        <td><?= htmlspecialchars($order['food_item']) ?></td>
-                        <td><?= htmlspecialchars($order['drink_item']) ?></td>
+                        <td><?= htmlspecialchars($order['name']) ?></td>
+                        <td><?= htmlspecialchars($order['phone']) ?></td>
+                        <td><?= htmlspecialchars($order['food']) ?></td>
+                        <td><?= htmlspecialchars($order['drink']) ?></td>
                         <td><?= htmlspecialchars($order['quantity']) ?></td>
-                        <td><?= htmlspecialchars($order['delivery_instructions']) ?></td>
+                        <td><?= htmlspecialchars($order['delivery']) ?></td>
                         <td>
                             <input type="checkbox" <?= $order['delivered'] ? 'checked' : '' ?>
                                 onclick="toggleDelivered(<?= $index ?>)">
                         </td>
                         <td><?= htmlspecialchars($order['total_amount']) ?></td>
-                        <td><?= htmlspecialchars($order['timestamp']) ?></td>
+                        <td><?= htmlspecialchars($order['order_date']) ?></td>
                         <td>
-                            <button class="delete-btn" onclick="deleteOrder(<?= $index ?>)">Delete</button>
+
                             <button class="receipt-btn" onclick="generateReceipt(<?= $index ?>)">Generate
                                 Receipt</button>
                         </td>
@@ -234,22 +233,22 @@ $conn->close();
                 const orderList = document.getElementById('orderList');
                 orderList.innerHTML = '';
                 orders.forEach((order, index) => {
-                    const foodPrice = foodPrices[order.food_item] || 0;
-                    const drinkPrice = drinkPrices[order.drink_item] || 0;
+                    const foodPrice = foodPrices[order.food] || 0;
+                    const drinkPrice = drinkPrices[order.drink] || 0;
                     const totalAmount = (foodPrice + drinkPrice) * order.quantity;
                     let row = document.createElement('tr');
                     row.innerHTML = `
-                          <td>${order.customer_name}</td>
-                          <td>${order.phone_number}</td>
-                          <td>${order.food_item}</td>
-                          <td>${order.drink_item}</td>
+                          <td>${order.name}</td>
+                          <td>${order.phone}</td>
+                          <td>${order.food}</td>
+                          <td>${order.drink}</td>
                           <td>${order.quantity}</td>
-                          <td>${order.delivery_instructions}</td>
+                          <td>${order.delivery}</td>
                           <td>
                               <input type="checkbox" ${order.delivered ? 'checked' : ''} onclick="toggleDelivered(${index})">
                           </td>
                           <td>${totalAmount}</td>
-                          <td>${order.timestamp || 'N/A'}</td>
+                          <td>${order.order_date || 'N/A'}</td>
                           <td>
                               <button class="delete-btn" onclick="deleteOrder(${index})">Delete</button>
                               <button class="receipt-btn" onclick="generateReceipt(${index})">Generate Receipt</button>
@@ -288,11 +287,18 @@ $conn->close();
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data.message);
-                    loadOrders();
+                    alert(data.message);
+                    if (data.message === 'Order deleted successfully') {
+                        loadOrders(); // Reload orders after successful deletion
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                 });
         }
     }
+
+
 
     function toggleDelivered(index) {
         const orderList = document.getElementById('orderList');
@@ -343,26 +349,26 @@ $conn->close();
         const orderList = document.getElementById('orderList');
         const row = orderList.children[index];
         const order = {
-            customer_name: row.children[0].innerText,
-            phone_number: row.children[1].innerText,
-            food_item: row.children[2].innerText,
-            drink_item: row.children[3].innerText,
+            name: row.children[0].innerText,
+            phone: row.children[1].innerText,
+            food: row.children[2].innerText,
+            drink: row.children[3].innerText,
             quantity: row.children[4].innerText,
-            delivery_instructions: row.children[5].innerText,
+            delivery: row.children[5].innerText,
             total_amount: row.children[7].innerText,
-            timestamp: row.children[8].innerText
+            order_date: row.children[8].innerText
         };
 
         const doc = new jsPDF();
 
-        doc.text(`Customer Name: ${order.customer_name}`, 10, 10);
-        doc.text(`Phone Number: ${order.phone_number}`, 10, 20);
-        doc.text(`Food Item: ${order.food_item}`, 10, 30);
-        doc.text(`Drink Item: ${order.drink_item}`, 10, 40);
+        doc.text(`Customer Name: ${order.name}`, 10, 10);
+        doc.text(`Phone Number: ${order.phone}`, 10, 20);
+        doc.text(`Food Item: ${order.food}`, 10, 30);
+        doc.text(`Drink Item: ${order.drink}`, 10, 40);
         doc.text(`Quantity: ${order.quantity}`, 10, 50);
-        doc.text(`Delivery Instructions: ${order.delivery_instructions}`, 10, 60);
+        doc.text(`Delivery Instructions: ${order.delivery}`, 10, 60);
         doc.text(`Total Amount: ${order.total_amount}`, 10, 70);
-        doc.text(`Timestamp: ${order.timestamp}`, 10, 80);
+        doc.text(`Timestamp: ${order.order_date}`, 10, 80);
 
         doc.setFontSize(40);
         doc.setTextColor(255, 0, 0);
@@ -372,12 +378,6 @@ $conn->close();
 
         doc.save('receipt.pdf');
     }
-
-  
-
-
-
-
 
     function searchOrders() {
         const input = document.getElementById('searchInput').value.toLowerCase();

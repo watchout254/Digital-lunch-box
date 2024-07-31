@@ -1,8 +1,8 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "orders_db"; // Replace with your actual database name
+$servername = "sql303.infinityfree.com";
+$username = "if0_37012884";
+$password = "3YzqZOmtfg"; // Replace with your actual password
+$dbname = "if0_37012884_orders_db"; // Replace with your actual database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -17,32 +17,37 @@ $data = file_get_contents("php://input");
 $request = json_decode($data, true);
 
 // Check if index is set in the request
-if (isset($request['index'])) {
-    $index = $request['index'];
+if (isset($request['index']) && is_numeric($request['index'])) {
+    $index = (int)$request['index'];
 
     // Fetch all orders
-    $sql = "SELECT * FROM orders";
+    $sql = "SELECT id FROM orders ORDER BY id ASC";
     $result = $conn->query($sql);
-    $orders = $result->fetch_all(MYSQLI_ASSOC);
 
-    // Check if the index is valid
-    if (isset($orders[$index])) {
-        $orderId = $orders[$index]['id'];
+    if ($result) {
+        $orders = $result->fetch_all(MYSQLI_ASSOC);
 
-        // Delete the order from the database
-        $deleteSql = "DELETE FROM orders WHERE id = ?";
-        $stmt = $conn->prepare($deleteSql);
-        $stmt->bind_param("i", $orderId);
+        // Check if the index is valid
+        if (isset($orders[$index])) {
+            $orderId = $orders[$index]['id'];
 
-        if ($stmt->execute()) {
-            $response = ["message" => "Order deleted successfully"];
+            // Delete the order from the database
+            $deleteSql = "DELETE FROM orders WHERE id = ?";
+            $stmt = $conn->prepare($deleteSql);
+            $stmt->bind_param("i", $orderId);
+
+            if ($stmt->execute()) {
+                $response = ["message" => "Order deleted successfully"];
+            } else {
+                $response = ["message" => "Error deleting order: " . $stmt->error];
+            }
+
+            $stmt->close();
         } else {
-            $response = ["message" => "Error deleting order"];
+            $response = ["message" => "Order not found"];
         }
-
-        $stmt->close();
     } else {
-        $response = ["message" => "Order not found"];
+        $response = ["message" => "Failed to fetch orders: " . $conn->error];
     }
 } else {
     $response = ["message" => "Invalid request"];
