@@ -277,22 +277,26 @@ $conn->close();
 
     function deleteOrder(index) {
         if (confirm('Are you sure you want to delete this order?')) {
-            fetch('view_orders.php', {
-                    method: 'DELETE',
+            fetch('delete_order.php', {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        index
+                        index: index
                     })
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data.message);
+                    alert(data.message);
                     loadOrders();
+                })
+                .catch(error => {
+                    console.error('Error deleting order:', error);
                 });
         }
     }
+
 
     function toggleDelivered(index) {
         const orderList = document.getElementById('orderList');
