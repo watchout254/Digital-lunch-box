@@ -1,8 +1,8 @@
 <?php
 $servername = "sql303.infinityfree.com";
 $username = "if0_37012884";
-$password = "3YzqZOmtfg"; // Replace with your actual password
-$dbname = "if0_37012884_orders_db"; // Replace with your actual database name
+$password = "3YzqZOmtfg";
+$dbname = "if0_37012884_orders_db";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
