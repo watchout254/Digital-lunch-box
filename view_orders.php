@@ -4,8 +4,8 @@ ini_set('display_errors', 0); // Hide errors in production
 
 $servername = "sql303.infinityfree.com";
 $username = "if0_37012884";
-$password = "3YzqZOmtfg"; // Replace with your actual password
-$dbname = "if0_37012884_orders_db"; // replace with your database name
+$password = "3YzqZOmtfg";
+$dbname = "if0_37012884_orders_db";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -17,8 +17,8 @@ if ($conn->connect_error) {
 
 // Fetch orders and their items
 $sql = "SELECT o.id, o.name, o.phone, o.delivery, o.total_amount, o.order_date, 
-               GROUP_CONCAT(DISTINCT oi.food_item) AS food_items, 
-               GROUP_CONCAT(DISTINCT oi.drink_item) AS drink_items, 
+               GROUP_CONCAT(DISTINCT oi.food_item SEPARATOR ', ') AS food_items, 
+               GROUP_CONCAT(DISTINCT oi.drink_item SEPARATOR ', ') AS drink_items, 
                SUM(oi.food_quantity) AS food_quantity, 
                SUM(oi.drink_quantity) AS drink_quantity
         FROM orders o
@@ -149,8 +149,8 @@ $conn->close();
                     </tr>
                 </thead>
                 <tbody id="orderList">
-                    <?php foreach ($orders as $index => $order): ?>
-                    <tr>
+                    <?php foreach ($orders as $order): ?>
+                    <tr data-id="<?= htmlspecialchars($order['id']) ?>">
                         <td><?= htmlspecialchars($order['name']) ?></td>
                         <td><?= htmlspecialchars($order['phone']) ?></td>
                         <td><?= htmlspecialchars($order['food_items']) ?></td>
@@ -191,9 +191,7 @@ $conn->close();
     }
 
     function generateReceipt(orderId) {
-        const {
-            jsPDF
-        } = window.jspdf;
+        const { jsPDF } = window.jspdf;
         const row = document.querySelector(`#orderList tr[data-id="${orderId}"]`);
         const order = {
             name: row.children[0].innerText,
@@ -220,9 +218,7 @@ $conn->close();
 
         doc.setFontSize(40);
         doc.setTextColor(255, 0, 0);
-        doc.text('Paid', 150, 50, {
-            angle: -45
-        });
+        doc.text('Paid', 150, 50, { angle: -45 });
 
         doc.save('receipt.pdf');
     }
@@ -255,27 +251,25 @@ $conn->close();
         });
     }
 
-    function deleteOrder(index) {
+    function deleteOrder(orderId) {
         if (confirm('Are you sure you want to delete this order?')) {
             fetch('delete_order.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        index: index
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.message);
-                    if (data.message === "Order deleted successfully") {
-                        document.querySelector(`tr[data-index="${index}"]`).remove();
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: orderId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (data.message === "Order deleted successfully") {
+                    document.querySelector(`tr[data-id="${orderId}"]`).remove();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
     }
     </script>

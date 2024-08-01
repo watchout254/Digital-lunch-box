@@ -165,7 +165,7 @@
     <div class="container">
         <h1>Digital Lunchbox Order Food</h1>
         <a class="nav-link" id="nav-link5" href="index.php">Home</a>
-        <form id="orderForm" action="submit_order.php" method="POST" enctype="application/x-www-form-urlencoded">>
+        <form id="orderForm" action="submit_order.php" method="POST" enctype="application/x-www-form-urlencoded">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required aria-required="true">
 
@@ -198,7 +198,7 @@
                         <option value="Sausages" data-price="50">Sausages/smokies - KES 50</option>
                         <option value="Samosa" data-price="70">Samosa - KES 70</option>
                     </select>
-                    <input type="number" class="food-quantity" name="food_quantity[]" min="1" value="1"
+                    <input type="number" class="food-quantity" name="food_quantity[]" min="1" value="2"
                         aria-label="Quantity">
                 </div>
             </div>
