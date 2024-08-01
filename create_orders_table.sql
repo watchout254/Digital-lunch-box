@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS orders (
 CREATE TABLE IF NOT EXISTS order_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
-    food_item VARCHAR(255),
-    drink_item VARCHAR(255),
+    food_item VARCHAR(255) NULL,
+    drink_item VARCHAR(255) NULL,
     food_quantity INT DEFAULT 0,
     drink_quantity INT DEFAULT 0,
     FOREIGN KEY (order_id) REFERENCES orders(id)
