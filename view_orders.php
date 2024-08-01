@@ -127,10 +127,7 @@ $conn->close();
         <div class="status-filter">
             <label><input type="radio" name="statusFilter" value="all" checked onchange="filterOrders(this)">
                 All</label>
-            <label><input type="radio" name="statusFilter" value="delivered" onchange="filterOrders(this)">
-                Delivered</label>
-            <label><input type="radio" name="statusFilter" value="pending" onchange="filterOrders(this)">
-                Pending</label>
+            
         </div>
         <div class="table-responsive">
             <table class="table table-striped">
