@@ -198,7 +198,7 @@
                         <option value="Sausages" data-price="50">Sausages/smokies - KES 50</option>
                         <option value="Samosa" data-price="70">Samosa - KES 70</option>
                     </select>
-                    <input type="number" class="food-quantity" name="food_quantity[]" min="1" value="2"
+                    <input type="number" class="food-quantity" name="food_quantity[]" min="1" value="1"
                         aria-label="Quantity">
                 </div>
             </div>

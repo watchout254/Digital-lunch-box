@@ -16,11 +16,9 @@ if ($conn->connect_error) {
 }
 
 // Fetch orders and their items
-$sql = "SELECT o.id, o.name, o.phone, o.delivery, o.total_amount, o.order_date, 
-               GROUP_CONCAT(DISTINCT oi.food_item SEPARATOR ', ') AS food_items, 
-               GROUP_CONCAT(DISTINCT oi.drink_item SEPARATOR ', ') AS drink_items, 
-               SUM(oi.food_quantity) AS food_quantity, 
-               SUM(oi.drink_quantity) AS drink_quantity
+$sql = "SELECT o.id, o.name, o.phone, o.delivery, o.total_amount, o.order_date,
+               GROUP_CONCAT(CONCAT(oi.food_item, ' (', oi.food_quantity, ')') SEPARATOR ', ') AS food_items,
+               GROUP_CONCAT(CONCAT(oi.drink_item, ' (', oi.drink_quantity, ')') SEPARATOR ', ') AS drink_items
         FROM orders o
         LEFT JOIN order_items oi ON o.id = oi.order_id
         GROUP BY o.id";
@@ -47,71 +45,71 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Digital Lunchbox | View Orders</title>
     <style>
-    /* Existing styles */
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f8f8f8;
-        margin: 0;
-        padding: 0;
-    }
+        /* Existing styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
 
-    .container {
-        width: 100%;
-        max-width: 800px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    h1 {
-        text-align: center;
-        font-size: 2rem;
-    }
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+        }
 
-    .delete-btn,
-    .logout-btn,
-    .print-btn,
-    .download-btn,
-    .receipt-btn {
-        background-color: #e74c3c;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        cursor: pointer;
-    }
+        .delete-btn,
+        .logout-btn,
+        .print-btn,
+        .download-btn,
+        .receipt-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
 
-    .delete-btn:hover,
-    .logout-btn:hover,
-    .print-btn:hover,
-    .download-btn:hover,
-    .receipt-btn:hover {
-        background-color: #c0392b;
-    }
+        .delete-btn:hover,
+        .logout-btn:hover,
+        .print-btn:hover,
+        .download-btn:hover,
+        .receipt-btn:hover {
+            background-color: #c0392b;
+        }
 
-    .styled-button {
-        display: inline-block;
-        padding: 10px 20px;
-        font-size: 16px;
-        color: white;
-        background-color: #007bff;
-        border: none;
-        border-radius: 5px;
-        text-align: center;
-        text-decoration: none;
-        transition: background-color 0.3s, transform 0.3s;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+        .styled-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    .styled-button:hover {
-        background-color: #0056b3;
-        transform: translateY(-2px);
-    }
+        .styled-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
 
-    .styled-button:active {
-        background-color: #004085;
-        transform: translateY(0);
-    }
+        .styled-button:active {
+            background-color: #004085;
+            transform: translateY(0);
+        }
     </style>
 </head>
 
@@ -127,10 +125,7 @@ $conn->close();
         <div class="status-filter">
             <label><input type="radio" name="statusFilter" value="all" checked onchange="filterOrders(this)">
                 All</label>
-            <label><input type="radio" name="statusFilter" value="delivered" onchange="filterOrders(this)">
-                Delivered</label>
-            <label><input type="radio" name="statusFilter" value="pending" onchange="filterOrders(this)">
-                Pending</label>
+
         </div>
         <div class="table-responsive">
             <table class="table table-striped">
@@ -140,8 +135,6 @@ $conn->close();
                         <th>Tel</th>
                         <th>Food Items</th>
                         <th>Drink Items</th>
-                        <th>Food Quantity</th>
-                        <th>Drink Quantity</th>
                         <th>Delivery</th>
                         <th>Total Amount</th>
                         <th>Order Date</th>
@@ -155,8 +148,6 @@ $conn->close();
                         <td><?= htmlspecialchars($order['phone']) ?></td>
                         <td><?= htmlspecialchars($order['food_items']) ?></td>
                         <td><?= htmlspecialchars($order['drink_items']) ?></td>
-                        <td><?= htmlspecialchars($order['food_quantity']) ?></td>
-                        <td><?= htmlspecialchars($order['drink_quantity']) ?></td>
                         <td><?= htmlspecialchars($order['delivery']) ?></td>
                         <td><?= htmlspecialchars($order['total_amount']) ?></td>
                         <td><?= htmlspecialchars($order['order_date']) ?></td>
@@ -173,105 +164,101 @@ $conn->close();
     </div>
 
     <script>
-    function printOrders() {
-        window.print();
-    }
+        function printOrders() {
+            window.print();
+        }
 
-    function downloadOrders() {
-        const orders = document.getElementById('orderList').innerHTML;
-        const blob = new Blob([orders], {
-            type: 'text/html'
-        });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'orders.html';
-        a.click();
-        URL.revokeObjectURL(url);
-    }
-
-    function generateReceipt(orderId) {
-        const { jsPDF } = window.jspdf;
-        const row = document.querySelector(`#orderList tr[data-id="${orderId}"]`);
-        const order = {
-            name: row.children[0].innerText,
-            phone: row.children[1].innerText,
-            food: row.children[2].innerText,
-            drink: row.children[3].innerText,
-            food_quantity: row.children[4].innerText,
-            drink_quantity: row.children[5].innerText,
-            delivery: row.children[6].innerText,
-            total_amount: row.children[7].innerText,
-            order_date: row.children[8].innerText
-        };
-
-        const doc = new jsPDF();
-        doc.text(`Customer Name: ${order.name}`, 10, 10);
-        doc.text(`Phone Number: ${order.phone}`, 10, 20);
-        doc.text(`Food Items: ${order.food}`, 10, 30);
-        doc.text(`Drink Items: ${order.drink}`, 10, 40);
-        doc.text(`Food Quantity: ${order.food_quantity}`, 10, 50);
-        doc.text(`Drink Quantity: ${order.drink_quantity}`, 10, 60);
-        doc.text(`Delivery Instructions: ${order.delivery}`, 10, 70);
-        doc.text(`Total Amount: ${order.total_amount}`, 10, 80);
-        doc.text(`Order Date: ${order.order_date}`, 10, 90);
-
-        doc.setFontSize(40);
-        doc.setTextColor(255, 0, 0);
-        doc.text('Paid', 150, 50, { angle: -45 });
-
-        doc.save('receipt.pdf');
-    }
-
-    function searchOrders() {
-        const input = document.getElementById('searchInput').value.toLowerCase();
-        const rows = document.querySelectorAll('#orderList tr');
-        rows.forEach(row => {
-            const cells = row.querySelectorAll('td');
-            let match = false;
-            cells.forEach(cell => {
-                if (cell.textContent.toLowerCase().includes(input)) {
-                    match = true;
-                }
+        function downloadOrders() {
+            const orders = document.getElementById('orderList').innerHTML;
+            const blob = new Blob([orders], {
+                type: 'text/html'
             });
-            row.style.display = match ? '' : 'none';
-        });
-    }
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'orders.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
 
-    function filterOrders(radio) {
-        const value = radio.value;
-        const rows = document.querySelectorAll('#orderList tr');
-        rows.forEach(row => {
-            if (value === 'all') {
-                row.style.display = '';
-            } else {
-                const delivery = row.children[6].textContent;
-                row.style.display = delivery.toLowerCase() === value ? '' : 'none';
-            }
-        });
-    }
+        function generateReceipt(orderId) {
+            const { jsPDF } = window.jspdf;
+            const row = document.querySelector(`#orderList tr[data-id="${orderId}"]`);
+            const order = {
+                name: row.children[0].innerText,
+                phone: row.children[1].innerText,
+                food: row.children[2].innerText,
+                drink: row.children[3].innerText,
+                delivery: row.children[4].innerText,
+                total_amount: row.children[5].innerText,
+                order_date: row.children[6].innerText
+            };
 
-    function deleteOrder(orderId) {
-        if (confirm('Are you sure you want to delete this order?')) {
-            fetch('delete_order.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id: orderId })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                if (data.message === "Order deleted successfully") {
-                    document.querySelector(`tr[data-id="${orderId}"]`).remove();
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
+            const doc = new jsPDF();
+            doc.text(`Customer Name: ${order.name}`, 10, 10);
+            doc.text(`Phone Number: ${order.phone}`, 10, 20);
+            doc.text(`Food Items: ${order.food}`, 10, 30);
+            doc.text(`Drink Items: ${order.drink}`, 10, 40);
+            doc.text(`Delivery Instructions: ${order.delivery}`, 10, 50);
+            doc.text(`Total Amount: ${order.total_amount}`, 10, 60);
+            doc.text(`Order Date: ${order.order_date}`, 10, 70);
+
+            doc.setFontSize(40);
+            doc.setTextColor(255, 0, 0);
+            doc.text('Paid', 150, 50, { angle: -45 });
+
+            doc.save('receipt.pdf');
+        }
+
+        function searchOrders() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#orderList tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                let match = false;
+                cells.forEach(cell => {
+                    if (cell.textContent.toLowerCase().includes(input)) {
+                        match = true;
+                    }
+                });
+                row.style.display = match ? '' : 'none';
             });
         }
-    }
+
+        function filterOrders(radio) {
+            const value = radio.value;
+            const rows = document.querySelectorAll('#orderList tr');
+            rows.forEach(row => {
+                if (value === 'all') {
+                    row.style.display = '';
+                } else {
+                    const delivery = row.children[6].textContent;
+                    row.style.display = delivery.toLowerCase() === value ? '' : 'none';
+                }
+            });
+        }
+
+        function deleteOrder(orderId) {
+            if (confirm('Are you sure you want to delete this order?')) {
+                fetch('delete_order.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: orderId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.message === "Order deleted successfully") {
+                        document.querySelector(`tr[data-id="${orderId}"]`).remove();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        }
     </script>
 </body>
 
