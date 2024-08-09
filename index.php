@@ -140,6 +140,69 @@
         font-size: 2rem;
     }
 
+    #get-help-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        font-size: 16px;
+        text-align: center;
+    }
+
+    #get-help-icon:hover {
+        background-color: #0056b3;
+    }
+
+    #chat-container {
+        position: fixed;
+        bottom: 70px;
+        right: 20px;
+        width: 300px;
+        background-color: #f1f1f1;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #chat-box {
+        display: flex;
+        flex-direction: column;
+        height: 400px;
+    }
+
+    #chat-log {
+        flex: 1;
+        overflow-y: auto;
+        padding: 10px;
+        background-color: #fff;
+        border-bottom: 1px solid #ccc;
+    }
+
+    #user-input {
+        border: none;
+        padding: 10px;
+        width: 80%;
+        box-sizing: border-box;
+    }
+
+    #send-btn {
+        border: none;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    #send-btn:hover {
+        background-color: #0056b3;
+    }
+
+
     @media (max-width: 768px) {
         .navbar-nav {
             text-align: center;
@@ -761,6 +824,64 @@
 
 
             <a href="tel:+254113138193">Click here to Call me</a>
+
+            <div id="get-help-icon">
+                💬 Get Help
+            </div>
+
+            <!-- Chat Interface -->
+            <div id="chat-container" style="display: none;">
+                <div id="chat-box">
+                    <div id="chat-log"></div>
+                    <input type="text" id="user-input" placeholder="Type your message...">
+                    <button id="send-btn">Send</button>
+                </div>
+            </div>
+            <script>
+            document.getElementById('get-help-icon').addEventListener('click', function() {
+                const chatContainer = document.getElementById('chat-container');
+                if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
+                    chatContainer.style.display = 'block';
+                } else {
+                    chatContainer.style.display = 'none';
+                }
+            });
+
+            document.getElementById('send-btn').addEventListener('click', function() {
+                const userInput = document.getElementById('user-input').value;
+                if (userInput.trim() !== "") {
+                    addMessage('User', userInput);
+                    getBotResponse(userInput);
+                    document.getElementById('user-input').value = "";
+                }
+            });
+
+            function addMessage(sender, message) {
+                const chatLog = document.getElementById('chat-log');
+                const messageDiv = document.createElement('div');
+                messageDiv.textContent = `${sender}: ${message}`;
+                chatLog.appendChild(messageDiv);
+                chatLog.scrollTop = chatLog.scrollHeight;
+            }
+
+            function getBotResponse(userMessage) {
+                let botResponse = '';
+
+                // Simple responses based on keywords
+                if (userMessage.toLowerCase().includes('hello')) {
+                    botResponse = 'Hi there! How can I assist you today?';
+                } else if (userMessage.toLowerCase().includes('order')) {
+                    botResponse = 'You can place an order by visiting our order page.';
+                } else if (userMessage.toLowerCase().includes('contact')) {
+                    botResponse = 'You can contact us through the contact form on our homepage.';
+                } else {
+                    botResponse = 'I\'m not sure how to help with that. Please try asking something else.';
+                }
+
+                addMessage('Bot', botResponse);
+            }
+            </script>
+
 
 
         </div>
