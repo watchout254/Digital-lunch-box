@@ -870,15 +870,21 @@
                 // Simple responses based on keywords
                 if (userMessage.toLowerCase().includes('hello')) {
                     botResponse = 'Hi there! How can I assist you today?';
+                } else if (userMessage.toLowerCase().includes('hi')) {
+                    botResponse = 'Hi there! How can I assist you today?';
                 } else if (userMessage.toLowerCase().includes('order')) {
-                    botResponse = 'You can place an order by visiting our order page.';
+                    botResponse = 'You can place an order by visiting our order page. Select many items as you like';
                 } else if (userMessage.toLowerCase().includes('contact')) {
-                    botResponse = 'You can contact us through the contact form on our homepage.';
+                    botResponse = 'You can contact us using this number:  +254113138193.';
+                } else if (userMessage.toLowerCase().includes('pay')) {
+                    botResponse = 'You can pay on delivery or pay in advance using the given number: +254113138193';
+                }else if (userMessage.toLowerCase().includes('menu')) {
+                    botResponse = 'Navigate to menu section in the homepage see for yourself !!';
                 } else {
                     botResponse = 'I\'m not sure how to help with that. Please try asking something else.';
                 }
 
-                addMessage('Bot', botResponse);
+                addMessage('Digital Lunchbox', botResponse);
             }
             </script>
 
