@@ -878,8 +878,10 @@
                     botResponse = 'You can contact us using this number:  +254113138193.';
                 } else if (userMessage.toLowerCase().includes('pay')) {
                     botResponse = 'You can pay on delivery or pay in advance using the given number: +254113138193';
-                }else if (userMessage.toLowerCase().includes('menu')) {
+                } else if (userMessage.toLowerCase().includes('menu')) {
                     botResponse = 'Navigate to menu section in the homepage see for yourself !!';
+                } else if (userMessage.toLowerCase().includes('thank you ')) {
+                    botResponse = 'Anytime. Feel free to ask anything bugging you';
                 } else {
                     botResponse = 'I\'m not sure how to help with that. Please try asking something else.';
                 }
