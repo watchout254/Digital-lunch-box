@@ -122,7 +122,7 @@ $conn->close();
     <div class="container">
         <h1>Order List</h1>
         <button class="print-btn" onclick="printOrders()">Print</button>
-        <button class="download-btn" onclick="downloadOrders()">Download</button>
+
         <a href="admin.php" class="styled-button">Admin panel</a>
         <div class="search-container">
             <input type="text" id="searchInput" onkeyup="searchOrders()" placeholder="Search for orders...">
@@ -156,7 +156,7 @@ $conn->close();
                         <td><?= htmlspecialchars($order['total_amount']) ?></td>
                         <td><?= htmlspecialchars($order['order_date']) ?></td>
                         <td>
-                            <button class="delete-btn" onclick="deleteOrder(<?= $order['id'] ?>)">Delete</button>
+
                             <button class="receipt-btn" onclick="generateReceipt(<?= $order['id'] ?>)">Generate
                                 Receipt</button>
                         </td>
