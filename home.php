@@ -269,8 +269,11 @@
                 <a class="nav-link custom-nav-link" id="nav-link4" href="#sectionDeliveryPayments">Delivery &
                     Payments</a>
                 <a class="nav-link custom-nav-link" id="nav-link5" href="order.php">Order now</a>
+                <a class="nav-link custom-nav-link" id="nav-link-cart" href="cart.php">
+                    <i class="fa-solid fa-cart-shopping"></i> <span id="cart-count">0</span>
+                </a>
                 <!--<a class="nav-link custom-nav-link" id="nav-link6" href="admin.php">Admin</a>-->
-                
+
                 <div id="userDisplay" class="nav-link custom-nav-link user-display" onclick="openModal()">Username</div>
                 <style>
                 .user-display {
@@ -320,84 +323,110 @@
                     color: #FFD700;
 
                     /* Gold color */
-                    /* Modal styles */}
-                    .modal {
-                        display: none;
-                        position: fixed;
-                        z-index: 1;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        height: 100%;
-                        overflow: auto;
-                        background-color: rgba(0, 0, 0, 0.6);
-                        /* Semi-transparent background */
-                        padding-top: 60px;
-                    }
+                    /* Modal styles */
+                }
 
-                    modal {
-                        display: none;
-                        position: fixed;
-                        z-index: 1;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        height: 100%;
-                        overflow: auto;
-                        background-color: rgba(0, 0, 0, 0.6);
-                        /* Semi-transparent background */
-                        padding-top: 60px;
-                    }
+                .modal {
+                    display: none;
+                    position: fixed;
+                    z-index: 1;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    overflow: auto;
+                    background-color: rgba(0, 0, 0, 0.6);
+                    /* Semi-transparent background */
+                    padding-top: 60px;
+                }
 
-                    /* Modal content */
-                    .modal-content {
-                        background-color: #fefefe;
-                        margin: 5% auto;
-                        padding: 20px;
-                        border-radius: 10px;
-                        /* Rounded corners */
-                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-                        /* Drop shadow */
-                        width: 80%;
-                        max-width: 400px;
-                        /* Maximum width */
-                        text-align: center;
-                        /* Center align content */
-                    }
+                modal {
+                    display: none;
+                    position: fixed;
+                    z-index: 1;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    overflow: auto;
+                    background-color: rgba(0, 0, 0, 0.6);
+                    /* Semi-transparent background */
+                    padding-top: 60px;
+                }
 
-                    /* Close button */
-                    .close {
-                        color: #aaa;
-                        float: right;
-                        font-size: 28px;
-                        font-weight: bold;
-                    }
+                /* Modal content */
+                .modal-content {
+                    background-color: #fefefe;
+                    margin: 5% auto;
+                    padding: 20px;
+                    border-radius: 10px;
+                    /* Rounded corners */
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                    /* Drop shadow */
+                    width: 80%;
+                    max-width: 400px;
+                    /* Maximum width */
+                    text-align: center;
+                    /* Center align content */
+                }
 
-                    .close:hover,
-                    .close:focus {
-                        color: black;
-                        text-decoration: none;
-                        cursor: pointer;
-                    }
+                /* Close button */
+                .close {
+                    color: #aaa;
+                    float: right;
+                    font-size: 28px;
+                    font-weight: bold;
+                }
 
-                    /* Logout button */
-                    .logout-btn {
-                        background-color: #d9534f;
-                        /* Bootstrap danger color */
-                        color: white;
-                        border: none;
-                        padding: 10px 20px;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        font-size: 1em;
-                        transition: background-color 0.3s ease;
-                        /* Smooth transition */
-                    }
+                .close:hover,
+                .close:focus {
+                    color: black;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
 
-                    .logout-btn:hover {
-                        background-color: #c9302c;
-                        /* Darker red on hover */
-                    }
+                /* Logout button */
+                .logout-btn {
+                    background-color: #d9534f;
+                    /* Bootstrap danger color */
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 1em;
+                    transition: background-color 0.3s ease;
+                    /* Smooth transition */
+                }
+
+                .logout-btn:hover {
+                    background-color: #c9302c;
+                    /* Darker red on hover */
+                }
+
+                .add-to-cart-btn {
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 10px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 1em;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 10px auto;
+                    transition: background-color 0.3s ease;
+                }
+
+                .add-to-cart-btn i {
+                    margin-left: 5px;
+                    /* Space between text and icon */
+                }
+
+                .add-to-cart-btn:hover {
+                    background-color: #0056b3;
+                }
                 </style>
             </div>
         </div>
@@ -480,6 +509,9 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn"
+                            onclick="addToCart('Kienyeji + Fish wet fry with cornmeal/rice', 350)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -495,6 +527,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Beef Dry with pasta', 300)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -510,6 +544,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('githeri with potatoes', 200)"> Add to Cart
+                            <i class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -525,6 +561,9 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn"
+                            onclick="addToCart('Marinated chicken with vegetable rice', 600)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -540,6 +579,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Swahili pilau with guacamole', 450)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -556,6 +597,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Chicken Biryani + Guacamole', 750)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -572,6 +615,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('pork & fries', 450)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -588,6 +633,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Lemonade', 250)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -603,6 +650,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Milkshake', 400)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -618,6 +667,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Fresh juice', 250)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -633,6 +684,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Mocktails', 350)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -649,6 +702,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Arrowroots boiled', 150)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -664,6 +719,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Sweet Potatoes', 100)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -679,6 +736,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('French toast', 170)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -694,6 +753,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Spanish', 150)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -709,6 +770,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('tea', 100)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -724,6 +787,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Brewed Coffee', 100)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -739,6 +804,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('White coffee', 200)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -754,6 +821,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Pancakes', 50)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -769,6 +838,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Sausages/smokies', 50)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -784,6 +855,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Samosa', 70)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
             </div>
@@ -894,27 +967,80 @@
                 const userDisplay = document.getElementById("userDisplay");
                 const loggedInUsername = localStorage.getItem("username");
                 const isLoggedIn = localStorage.getItem("loggedIn");
-    
+
                 if (isLoggedIn === "true" && loggedInUsername) {
                     userDisplay.textContent = loggedInUsername;
                 } else {
                     userDisplay.textContent = "Username";
                 }
             });
-    
+
             function openModal() {
                 document.getElementById("userModal").style.display = "block";
             }
-    
+
             function closeModal() {
                 document.getElementById("userModal").style.display = "none";
             }
-    
+
             function logout() {
                 localStorage.removeItem("loggedIn");
                 localStorage.removeItem("username");
                 // Redirect to the login page or any other page
             }
+
+            // JavaScript to handle the "Add to Cart" functionality
+            function addToCart(itemName, itemPrice) {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                // Check if the item already exists in the cart
+                let itemExists = cart.find(item => item.name === itemName);
+
+                if (itemExists) {
+                    itemExists.quantity += 1; // Increase quantity if item already exists
+                } else {
+                    cart.push({
+                        name: itemName,
+                        price: itemPrice,
+                        quantity: 1
+                    });
+                }
+
+                // Save the updated cart to localStorage
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                alert(`${itemName} has been added to your cart.`);
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const cartCountElement = document.getElementById("cart-count");
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                // Function to update the cart count
+                function updateCartCount() {
+                    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+                    cartCountElement.textContent = cartCount;
+                }
+
+                // Add to cart function
+                window.addToCart = function(name, price) {
+                    const existingItem = cart.find(item => item.name === name);
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            name,
+                            price,
+                            quantity: 1
+                        });
+                    }
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                }
+
+                // Initial cart count update
+                updateCartCount();
+            });
             </script>
 
 
@@ -953,7 +1079,6 @@
             document.getElementById('userModal').style.display = 'none';
         }
     }
-    
     </script>
 
 </body>
