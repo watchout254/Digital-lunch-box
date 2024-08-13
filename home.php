@@ -419,13 +419,17 @@
                     transition: background-color 0.3s ease;
                 }
 
-                .add-to-cart-btn i {
-                    margin-left: 5px;
-                    /* Space between text and icon */
+                #nav-link-cart i {
+                    color: red;
+                    /* Cart icon color */
+                    margin-right: 5px;
+                    /* Add some space between the icon and the number */
                 }
 
-                .add-to-cart-btn:hover {
-                    background-color: #0056b3;
+                #cart-count {
+                    color: black;
+                    /* Number color */
+                    font-weight: bold;
                 }
                 </style>
             </div>
@@ -579,8 +583,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
-                        <button class="add-to-cart-btn" onclick="addToCart('Swahili pilau with guacamole', 450)"> Add to Cart <i
-                                class="fa-solid fa-cart-plus"></i></button>
+                        <button class="add-to-cart-btn" onclick="addToCart('Swahili pilau with guacamole', 450)"> Add to
+                            Cart <i class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -597,8 +601,8 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
-                        <button class="add-to-cart-btn" onclick="addToCart('Chicken Biryani + Guacamole', 750)"> Add to Cart <i
-                                class="fa-solid fa-cart-plus"></i></button>
+                        <button class="add-to-cart-btn" onclick="addToCart('Chicken Biryani + Guacamole', 750)"> Add to
+                            Cart <i class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -990,6 +994,7 @@
             }
 
             // JavaScript to handle the "Add to Cart" functionality
+            // JavaScript to handle the "Add to Cart" functionality
             function addToCart(itemName, itemPrice) {
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -1011,6 +1016,7 @@
 
                 alert(`${itemName} has been added to your cart.`);
             }
+
 
             document.addEventListener("DOMContentLoaded", () => {
                 const cartCountElement = document.getElementById("cart-count");
