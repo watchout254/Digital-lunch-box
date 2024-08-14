@@ -108,10 +108,10 @@
         <!-- Sign Up Form -->
         <div id="signup-container">
             <h2>Sign Up</h2>
-            <form id="signup-form">
-                <input type="text" id="signup-username" placeholder="Username" required>
-                <input type="password" id="signup-password" placeholder="Password" required>
-                <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+            <form id="signup-form" method="POST" action="signup.php">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
                 <button type="submit">Sign Up</button>
             </form>
             <p>Already have an account? <a href="#" id="show-login">Log In</a></p>
@@ -120,68 +120,20 @@
         <!-- Log In Form -->
         <div id="login-container" style="display:none;">
             <h2>Log In</h2>
-            <form id="login-form">
-                <input type="text" id="login-username" placeholder="Username" required>
-                <input type="password" id="login-password" placeholder="Password" required>
+            <form id="login-form" method="POST" action="login.php">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
                 <button type="submit">Log In</button>
             </form>
             <p>Don't have an account? <a href="#" id="show-signup">Sign Up</a></p>
             <p>Admin Login <a href="admin.php">Admin</a></p>
         </div>
-
-        <div id="welcome-message" style="display:none;">
-            <h2>Welcome to Digital Lunchbox!</h2>
-            <button id="logout">Log Out</button>
-        </div>
     </div>
 
     <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const signupForm = document.getElementById("signup-form");
-        const loginForm = document.getElementById("login-form");
         const signupContainer = document.getElementById("signup-container");
         const loginContainer = document.getElementById("login-container");
-        const welcomeMessage = document.getElementById("welcome-message");
-
-        // Handle sign-up
-        signupForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const username = document.getElementById("signup-username").value;
-            const password = document.getElementById("signup-password").value;
-            const confirmPassword = document.getElementById("confirm-password").value;
-
-            if (password !== confirmPassword) {
-                alert("Passwords do not match. Please try again.");
-                return;
-            }
-
-            // Save user details to local storage
-            localStorage.setItem("username", username);
-            localStorage.setItem("password", password);
-
-            alert("Sign up successful! Please log in.");
-            signupForm.reset();
-            loginContainer.style.display = "block";
-            signupContainer.style.display = "none";
-        });
-
-        // Handle login
-        loginForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const username = document.getElementById("login-username").value;
-            const password = document.getElementById("login-password").value;
-
-            const storedUsername = localStorage.getItem("username");
-            const storedPassword = localStorage.getItem("password");
-
-            if (username === storedUsername && password === storedPassword) {
-                // Save login state
-                localStorage.setItem("loggedIn", "true");
-                window.location.href = "home.php";
-            } else {
-                alert("Incorrect username or password.");
-            }
-        });
 
         // Toggle between Sign Up and Log In
         document.getElementById("show-login").addEventListener("click", (e) => {
@@ -194,24 +146,6 @@
             e.preventDefault();
             loginContainer.style.display = "none";
             signupContainer.style.display = "block";
-        });
-
-        // Display username if logged in
-        const loggedInUsername = localStorage.getItem("username");
-        const isLoggedIn = localStorage.getItem("loggedIn");
-
-        if (isLoggedIn === "true" && loggedInUsername) {
-            welcomeMessage.style.display = "block";
-            loginContainer.style.display = "none";
-            signupContainer.style.display = "none";
-        }
-
-        // Handle logout
-        document.getElementById("logout").addEventListener("click", () => {
-            localStorage.removeItem("loggedIn");
-            localStorage.removeItem("username");
-            localStorage.removeItem("password");
-            window.location.href = "index.php"; // Redirect to the login page or any other page
         });
     });
     </script>

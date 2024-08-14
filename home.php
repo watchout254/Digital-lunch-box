@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['loggedin'])) {
+    header("Location: index.php");
+    exit;
+}
+
+echo "Welcome to Digital Lunchbox, " . $_SESSION['username'] . "!";
+?>
+<br>
+<a href="logout.php">Log Out</a>
 <!DOCTYPE html>
 <html lang="en">
 
