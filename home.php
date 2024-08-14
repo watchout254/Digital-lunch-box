@@ -1,15 +1,15 @@
 <?php
-session_start();
+                    session_start();
 
-if (!isset($_SESSION['loggedin'])) {
-    header("Location: index.php");
-    exit;
-}
+                    if (!isset($_SESSION['loggedin'])) {
+                        header("Location: index.php");
+                        exit;
+                    }
 
-echo "Welcome to Digital Lunchbox, " . $_SESSION['username'] . "!";
-?>
+                    echo "Warm Welcome to Digital Lunchbox, " . $_SESSION['username'] . "!";
+                ?>
 <br>
-<a href="logout.php">Log Out</a>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -284,9 +284,10 @@ echo "Welcome to Digital Lunchbox, " . $_SESSION['username'] . "!";
                 <a class="nav-link custom-nav-link" id="nav-link-cart" href="cart.php">
                     <i class="fa-solid fa-cart-shopping"></i> <span id="cart-count">0</span>
                 </a>
+                <a class="nav-link custom-nav-link" id="nav-link6" href="logout.php">Log Out</a>
                 <!--<a class="nav-link custom-nav-link" id="nav-link6" href="admin.php">Admin</a>-->
-
-                <div id="userDisplay" class="nav-link custom-nav-link user-display" onclick="openModal()">Username</div>
+                
+                <!--<div id="userDisplay" class="nav-link custom-nav-link user-display" onclick="openModal()">Username</div>-->
                 <style>
                 .user-display {
                     font-size: 1.5em;
