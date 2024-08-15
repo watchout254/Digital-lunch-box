@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS if0_37012884_orders_db;
-USE if0_37012884_orders_db;
+CREATE DATABASE IF NOT EXISTS if0_37112273_lunchbox;
+USE if0_37112273_lunchbox;
 
 CREATE TABLE IF NOT EXISTS orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -25,14 +25,14 @@ INSERT INTO orders (name, phone, delivery, total_amount) VALUES ('Example Name',
 INSERT INTO order_items (order_id, food_item, drink_item, food_quantity, drink_quantity) VALUES (1, 'Example Food', NULL, 1, 0);
 INSERT INTO order_items (order_id, food_item, drink_item, food_quantity, drink_quantity) VALUES (1, NULL, 'Example Drink', 0, 1);
 
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+--CREATE TABLE IF NOT EXISTS users (
+    --id INT AUTO_INCREMENT PRIMARY KEY,
+   -- username VARCHAR(50) NOT NULL UNIQUE,
+   -- password VARCHAR(255) NOT NULL,
+   -- created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+--);
 
 -- Insert example data (optional)
-INSERT INTO users (username, password) VALUES
-('exampleUser', 'examplePass123'),
-('sampleUser', 'samplePass456');
+--INSERT INTO users (username, password) VALUES
+--('exampleUser', 'examplePass123'),
+--('sampleUser', 'samplePass456');

@@ -164,7 +164,7 @@
 <body>
     <div class="container">
         <h1>Digital Lunchbox Order Food</h1>
-        <a class="nav-link" id="nav-link5" href="home.php">Home</a>
+        <a class="nav-link" id="nav-link5" href="index.php">Home</a>
         <form id="orderForm" action="submit_order.php" method="POST" enctype="application/x-www-form-urlencoded">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required aria-required="true">

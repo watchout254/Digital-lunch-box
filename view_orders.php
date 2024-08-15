@@ -2,10 +2,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 0); // Hide errors in production
 
-$servername = "sql303.infinityfree.com";
-$username = "if0_37012884";
-$password = "3YzqZOmtfg";
-$dbname = "if0_37012884_orders_db";
+$servername = "sql110.infinityfree.com";
+$username = "if0_37112273";
+$password = "r9I7cRHi88Xz93"; // Replace with your actual password
+$dbname = "if0_37112273_lunchbox";
 
 // Set the default timezone to Africa/Nairobi
 date_default_timezone_set('Africa/Nairobi');

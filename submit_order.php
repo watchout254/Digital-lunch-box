@@ -3,10 +3,11 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Database connection settings
-$servername = "sql303.infinityfree.com";
-$username = "if0_37012884";
-$password = "3YzqZOmtfg"; // Replace with your actual password
-$dbname = "if0_37012884_orders_db"; // Make sure this matches the database name in the SQL file
+$servername = "sql110.infinityfree.com";
+$username = "if0_37112273";
+$password = "r9I7cRHi88Xz93"; // Replace with your actual password
+$dbname = "if0_37112273_lunchbox";
+ // Make sure this matches the database name in the SQL file
 
 // Create a connection
 $conn = new mysqli($servername, $username, $password, $dbname);

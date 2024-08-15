@@ -99,7 +99,7 @@
 
 <body>
     <div class="container">
-        <a class="nav-link custom-nav-link" id="nav-link5" href="home.php">Home </a>
+        <a class="nav-link custom-nav-link" id="nav-link5" href="index.php">Home </a>
         <h1>Your Cart</h1>
         <div id="cart-items">
             <!-- Cart items will be dynamically inserted here -->

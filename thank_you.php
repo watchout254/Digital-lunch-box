@@ -13,7 +13,7 @@
         <h1 class="text-center">Thank You for Your Order!</h1>
         <p class="text-center">Your order has been placed successfully. We will get in touch with you shortly.</p>
         <div class="text-center">
-            <a href="home.php" class="btn btn-primary">Return to Home</a>
+            <a href="index.php" class="btn btn-primary">Return to Home</a>
         </div>
     </div>
 </body>
