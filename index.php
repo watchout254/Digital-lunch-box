@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -435,33 +433,33 @@
                     font-weight: bold;
                 }
 
-                 .cookie-consent {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background-color: #333;
-            color: #fff;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            display: none;
-            z-index: 1000;
-        }
+                .cookie-consent {
+                    position: fixed;
+                    bottom: 20px;
+                    left: 20px;
+                    right: 20px;
+                    background-color: #333;
+                    color: #fff;
+                    padding: 15px;
+                    border-radius: 5px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                    display: none;
+                    z-index: 1000;
+                }
 
-        .cookie-consent button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin-left: 20px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+                .cookie-consent button {
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    margin-left: 20px;
+                    cursor: pointer;
+                    border-radius: 5px;
+                }
 
-        .cookie-consent button:hover {
-            background-color: #45a049;
-        }
+                .cookie-consent button:hover {
+                    background-color: #45a049;
+                }
                 </style>
             </div>
         </div>
@@ -530,7 +528,7 @@
             <div class="row">
                 <div class="col-12">
                     <h1 class="explore-menu-heading">Explore Menu</h1>
-                    <p class="explore-menu-para">Find all our exclusive menus, specials, and offers only on our official
+                    <p class="explore-menu-para">Find all our exclusive menus, specials and offers only on our
                         website.</p>
                 </div>
                 <div class="col-12 col-md-4">
@@ -1092,41 +1090,41 @@
         <button id="acceptCookies">Accept</button>
     </div>
     <script>
-        // JavaScript to handle the cookie consent
-        document.addEventListener("DOMContentLoaded", function() {
-            var cookieConsent = document.getElementById('cookieConsent');
-            var acceptCookies = document.getElementById('acceptCookies');
+    // JavaScript to handle the cookie consent
+    document.addEventListener("DOMContentLoaded", function() {
+        var cookieConsent = document.getElementById('cookieConsent');
+        var acceptCookies = document.getElementById('acceptCookies');
 
-            if (!getCookie('cookiesAccepted')) {
-                cookieConsent.style.display = 'block';
-            }
+        if (!getCookie('cookiesAccepted')) {
+            cookieConsent.style.display = 'block';
+        }
 
-            acceptCookies.addEventListener('click', function() {
-                setCookie('cookiesAccepted', 'true', 365);
-                cookieConsent.style.display = 'none';
-            });
-
-            function setCookie(name, value, days) {
-                var expires = "";
-                if (days) {
-                    var date = new Date();
-                    date.setTime(date.getTime() + (days*24*60*60*1000));
-                    expires = "; expires=" + date.toUTCString();
-                }
-                document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-            }
-
-            function getCookie(name) {
-                var nameEQ = name + "=";
-                var ca = document.cookie.split(';');
-                for(var i=0;i < ca.length;i++) {
-                    var c = ca[i];
-                    while (c.charAt(0) === ' ') c = c.substring(1,c.length);
-                    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length,c.length);
-                }
-                return null;
-            }
+        acceptCookies.addEventListener('click', function() {
+            setCookie('cookiesAccepted', 'true', 365);
+            cookieConsent.style.display = 'none';
         });
+
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+    });
     </script>
 
     <div class="footer-section pb-5 pt-5 bg-dark text-white">
