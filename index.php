@@ -528,6 +528,35 @@
                     color: #28a745;
                     /* Green color for fetching status */
                 }
+
+                .container {
+                    text-align: center;
+                    margin-top: 20px;
+                }
+
+                .btn {
+                    background-color: #28a745;
+                    padding: 15px 30px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                }
+
+                .btn a {
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                }
+
+                .btn:hover {
+                    background-color: #218838;
+                }
+
+                .btn a:hover {
+                    color: #d4edda;
+                }
                 </style>
             </div>
         </div>
@@ -549,7 +578,6 @@
                 <a href="order.php" class="banner-order-button">Order Now</a>
             </div>
             <div class="container">
-
                 <button id="" class="btn"><a href="kibandaskis.php">Find Kibandaskis Around Me</a></button>
                 <div id="kibandaskisList" class="kibandaskis-list"></div>
             </div>
