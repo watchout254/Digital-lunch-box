@@ -460,6 +460,74 @@
                 .cookie-consent button:hover {
                     background-color: #45a049;
                 }
+
+                .container {
+                    text-align: center;
+                    margin-top: 50px;
+                }
+
+
+                .btn {
+                    background-color: #ff5733;
+                    /* Orange background */
+                    color: white;
+                    /* White text */
+                    padding: 15px 30px;
+                    /* Spacious padding */
+                    border: none;
+                    /* Remove borders */
+                    border-radius: 25px;
+                    /* Rounded corners */
+                    font-size: 18px;
+                    /* Increase font size */
+                    cursor: pointer;
+                    /* Pointer cursor on hover */
+                    transition: background-color 0.3s ease, transform 0.2s ease;
+                    /* Smooth transition effects */
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                    /* Slight shadow for depth */
+                }
+
+                .btn:hover {
+                    background-color: #c4451c;
+                    /* Darker orange on hover */
+                    transform: scale(1.05);
+                    /* Slightly increase size on hover */
+                }
+
+                .kibandaskis-list {
+                    margin-top: 20px;
+                    text-align: left;
+                    font-size: 18px;
+                    color: #333;
+                }
+
+
+                .kibandaskis-list p {
+                    font-size: 18px;
+                    color: #333;
+                    /* Dark gray for good contrast */
+                    margin: 5px 0;
+                }
+
+                .kibandaskis-list p:first-child {
+                    font-weight: bold;
+                    font-size: 20px;
+                    color: #007bff;
+                    /* Blue color for the first line */
+                }
+
+                .kibandaskis-list p:nth-child(2),
+                .kibandaskis-list p:nth-child(3) {
+                    color: #ff5733;
+                    /* Orange color for coordinates */
+                }
+
+                .kibandaskis-list p:last-child {
+                    font-weight: bold;
+                    color: #28a745;
+                    /* Green color for fetching status */
+                }
                 </style>
             </div>
         </div>
@@ -480,9 +548,74 @@
             <div class="d-flex flex-row justify-content-center">
                 <a href="order.php" class="banner-order-button">Order Now</a>
             </div>
-        </div>
-    </div>
+            <div class="container">
 
+                <button id="findKibandaskisBtn" class="btn">Find Kibandaskis Around Me</button>
+                <div id="kibandaskisList" class="kibandaskis-list"></div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+    document.getElementById('findKibandaskisBtn').addEventListener('click', () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            document.getElementById('kibandaskisList').innerHTML =
+                "Geolocation is not supported by this browser.";
+        }
+    });
+
+    function showPosition(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        // Example: Fetching nearby places (replace with actual API call)
+        fetchNearbyKibandaskis(latitude, longitude);
+    }
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.");
+                break;
+            case error.TIMEOUT:
+                alert("The request to get user location timed out.");
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("An unknown error occurred.");
+                break;
+        }
+    }
+
+    function fetchNearbyKibandaskis(latitude, longitude) {
+        // Simulated data for demonstration (replace with actual API call and response handling)
+        const nearbyKibandaskis = [{
+                name: "Kibandaski 1",
+                address: "123 Street",
+                distance: "500m"
+            },
+            {
+                name: "Kibandaski 2",
+                address: "456 Avenue",
+                distance: "1km"
+            }
+        ];
+
+        let kibandaskisHtml = "<h2>Nearby Kibandaskis</h2>";
+        nearbyKibandaskis.forEach(kibandaski => {
+            kibandaskisHtml += `<p><strong>${kibandaski.name}</strong><br>Address: ${kibandaski.address}<br>Distance:
+                ${kibandaski.distance}</p>`;
+        });
+
+        kibandaskisHtml += `<p>Use Google Maps or any navigation app to get directions to the selected Kibandaski.</p>`;
+
+        document.getElementById('kibandaskisList').innerHTML = kibandaskisHtml;
+    }
+    </script>
 
 
     <div class="wcu-section pb-5 pt-5" id="sectionWcu">
