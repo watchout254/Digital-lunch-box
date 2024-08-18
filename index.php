@@ -550,7 +550,7 @@
             </div>
             <div class="container">
 
-                <button id="findKibandaskisBtn" class="btn">Find Kibandaskis Around Me</button>
+                <button id="" class="btn"><a href="kibandaskis.php">Find Kibandaskis Around Me</a></button>
                 <div id="kibandaskisList" class="kibandaskis-list"></div>
             </div>
         </div>
