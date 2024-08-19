@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Nearby Kibandaskis</title>
+    <title>Digital Lunchbox | Nearby</title>
     <!-- Google Maps JavaScript API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4S7ETKRTLQGYxh5S6nwaoyVGcIyvbwHU&libraries=places">
     </script>
@@ -13,50 +13,56 @@
     <style>
     body {
         font-family: 'Roboto', sans-serif;
-        background-color: #f8f9fa;
+        background-color: #f5f5f5;
         margin: 0;
         padding: 0;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100vh;
-        flex-direction: column;
     }
 
     h1 {
-        color: #343a40;
+        color: #333;
         font-size: 2.5rem;
         margin-bottom: 20px;
+        text-align: center;
     }
 
     #find-restaurants,
     #back-home {
-        background-color: #28a745;
+        background-color: #007bff;
         color: white;
         border: none;
         padding: 15px 30px;
-        border-radius: 5px;
+        border-radius: 50px;
         font-size: 1.2rem;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: all 0.3s ease;
         margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+        width: 90%;
+        max-width: 400px;
     }
 
     #find-restaurants:hover,
     #back-home:hover {
-        background-color: #218838;
+        background-color: #0056b3;
+        box-shadow: 0 6px 12px rgba(0, 123, 255, 0.6);
     }
 
     ul {
         list-style-type: none;
         padding: 0;
-        width: 100%;
-        max-width: 400px;
+        width: 90%;
+        max-width: 600px;
         background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         overflow-y: auto;
-        max-height: 300px;
+        max-height: 400px;
+        margin-top: 20px;
     }
 
     li {
@@ -66,11 +72,16 @@
         border-bottom: 1px solid #dee2e6;
         font-size: 1rem;
         color: #495057;
+        transition: background-color 0.3s ease;
     }
 
     li img {
-        margin-right: 10px;
-        border-radius: 5px;
+        margin-right: 15px;
+        border-radius: 8px;
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     li:last-child {
@@ -78,7 +89,7 @@
     }
 
     li:hover {
-        background-color: #f1f3f5;
+        background-color: #f8f9fa;
     }
 
     @media (max-width: 768px) {
@@ -90,6 +101,11 @@
         #back-home {
             font-size: 1rem;
             padding: 12px 20px;
+        }
+
+        ul {
+            max-width: 90%;
+            max-height: 300px;
         }
 
         li {
@@ -107,12 +123,11 @@
 </head>
 
 <body>
-    <h1>Find Nearby Kibandaskis</h1>
-
+    <h1>Find Nearby Restaurants</h1>
     <!-- Back to Homepage Button -->
     <button id="back-home" onclick="window.location.href='index.php'">Back to Homepage</button>
-
-    <button id="find-restaurants">Find Nearby Kibandaskis</button>
+    <!-- Find Nearby Restaurants Button -->
+    <button id="find-restaurants">Find Nearby Restaurants</button>
     <ul id="restaurants-list"></ul>
 
     <script>
@@ -136,63 +151,60 @@
 
         const service = new google.maps.places.PlacesService(document.createElement('div'));
         service.nearbySearch(request, (results, status) => {
-            console.log("Google Places API status:", status);
-            console.log("Google Places API response:", results);
-
             if (status === google.maps.places.PlacesServiceStatus.OK) {
-                displayRestaurants(results);
-            } else if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-                alert('No restaurants found nearby.');
-            } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {
-                alert('Query limit reached. Try again later.');
-            } else if (status === google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
-                alert('Request denied. Check your API key and restrictions.');
-            } else if (status === google.maps.places.PlacesServiceStatus.INVALID_REQUEST) {
-                alert('Invalid request. Please try again.');
-            } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
-                alert('An unknown error occurred. Please try again.');
+                results.forEach(restaurant => {
+                    fetchRestaurantDetails(restaurant);
+                });
             } else {
-                console.error('Error fetching restaurants:', status);
-                alert('Failed to fetch nearby restaurants. Please try again later.');
+                handleErrors(status);
             }
         });
     }
 
-    function displayRestaurants(restaurants) {
+    function fetchRestaurantDetails(restaurant) {
+        const request = {
+            placeId: restaurant.place_id,
+            fields: ['name', 'vicinity', 'formatted_phone_number', 'photos']
+        };
+
+        const service = new google.maps.places.PlacesService(document.createElement('div'));
+        service.getDetails(request, (details, status) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                displayRestaurant(details);
+            } else {
+                console.error('Error fetching restaurant details:', status);
+            }
+        });
+    }
+
+    function displayRestaurant(restaurant) {
         const list = document.getElementById('restaurants-list');
-        list.innerHTML = '';
+        const item = document.createElement('li');
 
-        if (restaurants.length === 0) {
-            list.innerHTML = '<li>No nearby restaurants found.</li>';
-        } else {
-            restaurants.forEach(restaurant => {
-                const item = document.createElement('li');
-
-                // Display restaurant name and address
-                let content = `${restaurant.name} - ${restaurant.vicinity}`;
-
-                // If photos are available, add a thumbnail
-                if (restaurant.photos && restaurant.photos.length > 0) {
-                    const photo = restaurant.photos[0].getUrl({
-                        'maxWidth': 100,
-                        'maxHeight': 100
-                    });
-                    const img = document.createElement('img');
-                    img.src = photo;
-                    img.alt = restaurant.name;
-                    img.width = 50; // Set width and height for thumbnail
-                    img.height = 50;
-                    item.appendChild(img);
-                }
-
-                // Append text content
-                const text = document.createElement('span');
-                text.textContent = content;
-                item.appendChild(text);
-
-                list.appendChild(item);
-            });
+        // Display restaurant name, address, and phone number
+        let content = `${restaurant.name} - ${restaurant.vicinity}`;
+        if (restaurant.formatted_phone_number) {
+            content += ` | Contact: ${restaurant.formatted_phone_number}`;
         }
+
+        // If photos are available, add a thumbnail
+        if (restaurant.photos && restaurant.photos.length > 0) {
+            const photo = restaurant.photos[0].getUrl({
+                'maxWidth': 100,
+                'maxHeight': 100
+            });
+            const img = document.createElement('img');
+            img.src = photo;
+            img.alt = restaurant.name;
+            item.appendChild(img);
+        }
+
+        // Append text content
+        const text = document.createElement('span');
+        text.textContent = content;
+        item.appendChild(text);
+
+        list.appendChild(item);
     }
 
     function handleError(error) {
@@ -200,13 +212,24 @@
         alert('Error retrieving your location. Please enable location services and try again.');
     }
 
+    function handleErrors(status) {
+        const errorMessages = {
+            ZERO_RESULTS: 'No restaurants found nearby.',
+            OVER_QUERY_LIMIT: 'Query limit reached. Try again later.',
+            REQUEST_DENIED: 'Request denied. Check your API key and restrictions.',
+            INVALID_REQUEST: 'Invalid request. Please try again.',
+            UNKNOWN_ERROR: 'An unknown error occurred. Please try again.'
+        };
+
+        alert(errorMessages[status] || 'Failed to fetch nearby restaurants. Please try again later.');
+    }
+
     document.getElementById('find-restaurants').addEventListener('click', () => {
-        console.log("Find Nearby Kibandaskis button clicked.");
+        alert('Loading nearby restaurants, please wait...');
         getUserLocation(
             position => {
                 const lat = position.coords.latitude;
                 const lng = position.coords.longitude;
-                console.log(`Latitude: ${lat}, Longitude: ${lng}`);
                 fetchNearbyRestaurants(lat, lng);
             },
             handleError

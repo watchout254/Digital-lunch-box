@@ -273,7 +273,8 @@
                     <i class="fa-solid fa-cart-shopping"></i> <span id="cart-count">0</span>
                 </a>
                 <!--<a class="nav-link custom-nav-link" id="nav-link6" href="logout.php">Log Out</a>-->
-                <a class="nav-link custom-nav-link" id="nav-link6" href="admin.php">Admin</a>
+                <a class="nav-link custom-nav-link" id="nav-link6" href="admin.php"><i class="fa fa-lock"
+                        aria-hidden="true"></i></a>
 
                 <!--<div id="userDisplay" class="nav-link custom-nav-link user-display" onclick="openModal()">Username</div>-->
                 <style>
@@ -578,7 +579,8 @@
                 <a href="order.php" class="banner-order-button">Order Now</a>
             </div>
             <div class="container">
-                <button id="" class="btn"><a href="kibandaskis.php">Find Kibandaskis Around Me</a></button>
+                <button id="" class="btn"><a href="kibandaskis.php"><i class="fa fa-search-plus"
+                            aria-hidden="true"></i>Find restaurants</a></button>
                 <div id="kibandaskisList" class="kibandaskis-list"></div>
             </div>
         </div>
