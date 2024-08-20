@@ -124,6 +124,7 @@
 
 <body>
     <h1>Find Nearby Restaurants</h1>
+    <p>If you order in one of these restaurants, make sure you state <b>Digital Lunchbox</b> when ordering</p>
     <!-- Back to Homepage Button -->
     <button id="back-home" onclick="window.location.href='index.php'">Back to Homepage</button>
     <!-- Find Nearby Restaurants Button -->
@@ -206,6 +207,7 @@
             link.textContent = content;
             link.target = '_blank'; // Open the link in a new tab
             link.style.color = '#007bff'; // Optional: style the link
+            link.onclick = () => trackRestaurantClick(restaurant.place_id);
             item.appendChild(link);
         } else {
             const text = document.createElement('span');
@@ -214,6 +216,25 @@
         }
 
         list.appendChild(item);
+    }
+
+    function trackRestaurantClick(placeId) {
+        fetch('track_click.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    placeId: placeId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Click tracked:', data);
+            })
+            .catch(error => {
+                console.error('Error tracking click:', error);
+            });
     }
 
     function handleError(error) {
