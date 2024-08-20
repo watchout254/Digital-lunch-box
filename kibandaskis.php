@@ -164,7 +164,7 @@
     function fetchRestaurantDetails(restaurant) {
         const request = {
             placeId: restaurant.place_id,
-            fields: ['name', 'vicinity', 'formatted_phone_number', 'photos']
+            fields: ['name', 'vicinity', 'formatted_phone_number', 'photos', 'website']
         };
 
         const service = new google.maps.places.PlacesService(document.createElement('div'));
@@ -199,10 +199,19 @@
             item.appendChild(img);
         }
 
-        // Append text content
-        const text = document.createElement('span');
-        text.textContent = content;
-        item.appendChild(text);
+        // Create a clickable link if the website is available
+        if (restaurant.website) {
+            const link = document.createElement('a');
+            link.href = restaurant.website;
+            link.textContent = content;
+            link.target = '_blank'; // Open the link in a new tab
+            link.style.color = '#007bff'; // Optional: style the link
+            item.appendChild(link);
+        } else {
+            const text = document.createElement('span');
+            text.textContent = content;
+            item.appendChild(text);
+        }
 
         list.appendChild(item);
     }
