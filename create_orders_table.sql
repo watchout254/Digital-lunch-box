@@ -25,6 +25,9 @@ INSERT INTO orders (name, phone, delivery, total_amount) VALUES ('Example Name',
 INSERT INTO order_items (order_id, food_item, drink_item, food_quantity, drink_quantity) VALUES (1, 'Example Food', NULL, 1, 0);
 INSERT INTO order_items (order_id, food_item, drink_item, food_quantity, drink_quantity) VALUES (1, NULL, 'Example Drink', 0, 1);
 
+
+
+
 --CREATE TABLE IF NOT EXISTS users (
     --id INT AUTO_INCREMENT PRIMARY KEY,
    -- username VARCHAR(50) NOT NULL UNIQUE,
