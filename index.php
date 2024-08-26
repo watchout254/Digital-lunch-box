@@ -707,9 +707,11 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
-                        <button class="add-to-cart-btn"
-                            onclick="addToCart('Kienyeji + Fish wet fry with cornmeal/rice', 350)"> Add to Cart <i
-                                class="fa-solid fa-cart-plus"></i></button>
+
+                        <button type="button" class="add-to-cart-btn"
+                            onclick="addToCart('Kienyeji + Fish wet fry with cornmeal/rice', 350)">
+                            Add to Cart <i class="fa-solid fa-cart-plus"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -1204,11 +1206,11 @@
                         quantity: 1
                     });
                 }
-
                 // Save the updated cart to localStorage
                 localStorage.setItem('cart', JSON.stringify(cart));
 
-                alert(`${itemName} has been added to your cart.`);
+                // Display an alert to the user without storing it
+                alert(itemName + " has been added to your cart!");
             }
 
 

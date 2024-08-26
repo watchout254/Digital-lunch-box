@@ -383,21 +383,7 @@
         });
     }
 
-    function recordVisit() {
-        let visits = parseInt(localStorage.getItem('visits')) || 0;
-        localStorage.setItem('visits', visits + 1);
-    }
 
-    function updateVisitCounter() {
-        const visits = localStorage.getItem('visits') || 0;
-        document.getElementById('visitCounter').innerText = `Visits: ${visits}`;
-    }
-
-    function showVisitorInfo() {
-        const date = new Date();
-        const visitorInfo = `Last visit: ${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-        document.getElementById('visitorInfo').innerText = visitorInfo;
-    }
 
     function renderMostSoldCharts() {
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
