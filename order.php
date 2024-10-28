@@ -16,7 +16,6 @@
     }
 
     .container {
-        width: 100%;
         max-width: 600px;
         margin: 50px auto;
         padding: 20px;
@@ -30,6 +29,20 @@
         color: #333;
         margin-bottom: 20px;
         font-size: 1.75rem;
+    }
+
+    .nav-link {
+        display: block;
+        margin-bottom: 20px;
+        color: #007bff;
+        text-align: center;
+        text-decoration: none;
+        font-size: 1.1rem;
+    }
+
+    .nav-link:hover {
+        color: #0056b3;
+        text-decoration: underline;
     }
 
     form {
@@ -69,26 +82,6 @@
 
     button:hover {
         background-color: #0056b3;
-    }
-
-    .nav-link {
-        display: block;
-        margin-bottom: 20px;
-        color: #007bff;
-        text-align: center;
-        text-decoration: none;
-        font-size: 1.1rem;
-    }
-
-    .nav-link:hover {
-        color: #0056b3;
-        text-decoration: underline;
-    }
-
-    p {
-        text-align: center;
-        color: #777;
-        font-size: 0.9rem;
     }
 
     .total-amount {
@@ -131,32 +124,6 @@
         .item {
             flex-direction: column;
         }
-
-        .item select,
-        .item input {
-            width: 100%;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .container {
-            padding: 10px;
-        }
-
-        input,
-        select,
-        button {
-            padding: 8px;
-            font-size: 0.8rem;
-        }
-
-        h1 {
-            font-size: 1.5rem;
-        }
-
-        .nav-link {
-            font-size: 1rem;
-        }
     }
     </style>
 </head>
@@ -164,7 +131,7 @@
 <body>
     <div class="container">
         <h1>Digital Lunchbox Order Food</h1>
-        <a class="nav-link" id="nav-link5" href="index.php">Home</a>
+        <a class="nav-link" href="index.php">Home</a>
         <form id="orderForm" action="submit_order.php" method="POST" enctype="application/x-www-form-urlencoded">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required aria-required="true">
@@ -177,26 +144,10 @@
                 <div class="item">
                     <select class="food-select" name="food[]" data-price="0" aria-label="Select a food item">
                         <option value="" data-price="0" disabled selected>Select a food item</option>
-                        <option value="Kienyeji + Fish wet fry with cornmeal/rice" data-price="500">Kienyeji + Fish wet
-                            fry with cornmeal/rice - KES 500</option>
-                        <option value="Beef dry fry with pasta" data-price="400">Beef dry fry with pasta - KES 400
-                        </option>
-                        <option value="Githeri + Potatoes + Diced Avocado" data-price="350">Githeri + Potatoes + Diced
-                            Avocado - KES 350</option>
-                        <option value="Marinated Chicken with vegetable rice" data-price="450">Marinated Chicken with
-                            vegetable rice - KES 450</option>
-                        <option value="Swahili Pilau with Guacamole" data-price="420">Swahili Pilau with Guacamole - KES
-                            420</option>
-                        <option value="Chicken Biryani + Guacamole" data-price="480">Chicken Biryani + Guacamole - KES
-                            480</option>
-                        <option value="Arrowroots boiled" data-price="150">Arrowroots boiled - KES 150</option>
-                        <option value="Pork & Fries" data-price="450">Pork & Fries - KES 450</option>
-                        <option value="Sweetpotatoes" data-price="100">Sweetpotatoes - KES 100</option>
-                        <option value="French toast" data-price="170">French Toast - KES 170</option>
-                        <option value="Spanish" data-price="150">Spanish - KES 150</option>
-                        <option value="Pancakes" data-price="50">Pancakes - KES 50</option>
-                        <option value="Sausages" data-price="50">Sausages/smokies - KES 50</option>
-                        <option value="Samosa" data-price="70">Samosa - KES 70</option>
+                        <option value="Kienyeji + Fish" data-price="500">Kienyeji + Fish - KES 500</option>
+                        <option value="Beef Pasta" data-price="400">Beef Pasta - KES 400</option>
+                        <option value="Githeri + Potatoes" data-price="350">Githeri + Potatoes - KES 350</option>
+                        <option value="Marinated Chicken" data-price="450">Marinated Chicken - KES 450</option>
                     </select>
                     <input type="number" class="food-quantity" name="food_quantity[]" min="1" value="1"
                         aria-label="Quantity">
@@ -211,11 +162,8 @@
                         <option value="" data-price="0" disabled selected>Select a drink</option>
                         <option value="Lemonade" data-price="100">Lemonade - KES 100</option>
                         <option value="Milkshake" data-price="150">Milkshake - KES 150</option>
-                        <option value="Juice" data-price="120">Fresh juice - KES 120</option>
-                        <option value="Mocktail" data-price="180">Mocktails - KES 180</option>
-                        <option value="Tea" data-price="100">Tea - KES 100</option>
-                        <option value="Brewed coffee" data-price="100">Brewed Coffee - KES 100</option>
-                        <option value="White coffee" data-price="200">White coffee - KES 200</option>
+                        <option value="Juice" data-price="120">Juice - KES 120</option>
+                        <option value="Mocktail" data-price="180">Mocktail - KES 180</option>
                     </select>
                     <input type="number" class="drink-quantity" name="drink_quantity[]" min="1" value="1"
                         aria-label="Quantity">
@@ -231,7 +179,7 @@
             <button type="reset">Reset Form</button>
 
             <div class="total-amount" id="totalAmountDisplay">Total Amount: KES 0</div>
-            <p><b>After delivery be sure to call us and let us know your feedback. Thank you.</b></p>
+            <p><b>After delivery, please call us with feedback. Thank you!</b></p>
         </form>
     </div>
 
@@ -241,7 +189,6 @@
         const foodQuantities = document.querySelectorAll('.food-quantity');
         const drinkItems = document.querySelectorAll('.drink-select');
         const drinkQuantities = document.querySelectorAll('.drink-quantity');
-
         let totalAmount = 0;
 
         foodItems.forEach((foodSelect, index) => {
@@ -267,20 +214,10 @@
         newItem.innerHTML = `
                 <select class="food-select" name="food[]" data-price="0" aria-label="Select a food item">
                     <option value="" data-price="0" disabled selected>Select a food item</option>
-                    <option value="Kienyeji + Fish wet fry with cornmeal/rice" data-price="500">Kienyeji + Fish wet fry with cornmeal/rice - KES 500</option>
-                    <option value="Beef dry fry with pasta" data-price="400">Beef dry fry with pasta - KES 400</option>
-                    <option value="Githeri + Potatoes + Diced Avocado" data-price="350">Githeri + Potatoes + Diced Avocado - KES 350</option>
-                    <option value="Marinated Chicken with vegetable rice" data-price="450">Marinated Chicken with vegetable rice - KES 450</option>
-                    <option value="Swahili Pilau with Guacamole" data-price="420">Swahili Pilau with Guacamole - KES 420</option>
-                    <option value="Chicken Biryani + Guacamole" data-price="480">Chicken Biryani + Guacamole - KES 480</option>
-                    <option value="Arrowroots boiled" data-price="150">Arrowroots boiled - KES 150</option>
-                    <option value="Pork & Fries" data-price="450">Pork & Fries - KES 450</option>
-                    <option value="Sweetpotatoes" data-price="100">Sweetpotatoes - KES 100</option>
-                    <option value="French toast" data-price="170">French Toast - KES 170</option>
-                    <option value="Spanish" data-price="150">Spanish - KES 150</option>
-                    <option value="Pancakes" data-price="50">Pancakes - KES 50</option>
-                    <option value="Sausages" data-price="50">Sausages/smokies - KES 50</option>
-                    <option value="Samosa" data-price="70">Samosa - KES 70</option>
+                    <option value="Kienyeji + Fish" data-price="500">Kienyeji + Fish - KES 500</option>
+                    <option value="Beef Pasta" data-price="400">Beef Pasta - KES 400</option>
+                    <option value="Githeri + Potatoes" data-price="350">Githeri + Potatoes - KES 350</option>
+                    <option value="Marinated Chicken" data-price="450">Marinated Chicken - KES 450</option>
                 </select>
                 <input type="number" class="food-quantity" name="food_quantity[]" min="1" value="1" aria-label="Quantity">
             `;
@@ -297,11 +234,8 @@
                     <option value="" data-price="0" disabled selected>Select a drink</option>
                     <option value="Lemonade" data-price="100">Lemonade - KES 100</option>
                     <option value="Milkshake" data-price="150">Milkshake - KES 150</option>
-                    <option value="Juice" data-price="120">Fresh juice - KES 120</option>
-                    <option value="Mocktail" data-price="180">Mocktails - KES 180</option>
-                    <option value="Tea" data-price="100">Tea - KES 100</option>
-                    <option value="Brewed coffee" data-price="100">Brewed Coffee - KES 100</option>
-                    <option value="White coffee" data-price="200">White coffee - KES 200</option>
+                    <option value="Juice" data-price="120">Juice - KES 120</option>
+                    <option value="Mocktail" data-price="180">Mocktail - KES 180</option>
                 </select>
                 <input type="number" class="drink-quantity" name="drink_quantity[]" min="1" value="1" aria-label="Quantity">
             `;
@@ -309,9 +243,9 @@
         updateTotalAmount();
     }
 
-    document.getElementById('orderForm').addEventListener('input', updateTotalAmount);
-
-    window.onload = updateTotalAmount;
+    document.querySelectorAll('.food-select, .food-quantity, .drink-select, .drink-quantity').forEach(element => {
+        element.addEventListener('change', updateTotalAmount);
+    });
     </script>
 </body>
 
