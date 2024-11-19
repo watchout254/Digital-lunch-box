@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo.png" type="image/png">
     <title>Digital Lunchbox | Nearby</title>
     <!-- Google Maps JavaScript API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places">
@@ -123,6 +124,7 @@
 </head>
 
 <body>
+<img src="logo.png" alt="Digital Lunchbox Logo" style="height: 100px; width: auto;">
     <h1>Find Nearby Restaurants</h1>
     <p>If you order in one of these restaurants, make sure you state <b>Digital Lunchbox</b> when ordering</p>
     <!-- Back to Homepage Button -->

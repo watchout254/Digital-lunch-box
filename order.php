@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="icon" href="logo.png" type="image/png">
     <title>Digital Lunchbox | Order Page</title>
+    
     <style>
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -130,7 +132,9 @@
 
 <body>
     <div class="container">
+    <img src="logo.png" alt="Digital Lunchbox Logo" style="height: 100px; width: auto;">
         <h1>Digital Lunchbox Order Food</h1>
+        
         <a class="nav-link" href="index.php">Home</a>
         <form id="orderForm" action="submit_order.php" method="POST" enctype="application/x-www-form-urlencoded">
             <label for="name">Name:</label>
