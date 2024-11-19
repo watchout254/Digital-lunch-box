@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Lunchbox</title>
+    <link rel="icon" href="logo.png" type="image/png">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -256,6 +258,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
+    
         <h3><b>DIGITAL LUNCHBOX</b></h3>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -1294,6 +1297,7 @@
 
     <div class="footer-section pb-5 pt-5 bg-dark text-white">
         <div class="container text-center">
+        <img src="logo.png" alt="Digital Lunchbox Logo" style="height: 100px; width: auto;">
             <h1 class="footer-heading">Digital Lunchbox</h1>
             <p class="footer-para">Exploring your Taste Buds </p>
             <p class="footer-para">&copy; 2024 Digital Lunchbox. All Rights Reserved.</p>

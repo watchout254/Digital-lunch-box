@@ -8,6 +8,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="logo.png" type="image/png">
     <title>Digital Lunchbox Admin</title>
     <style>
     body {
@@ -209,6 +210,7 @@
 <body>
     <div class="login-container" id="loginContainer">
         <div class="login-box">
+             <link rel="icon" href="logo.png" type="image/png">
             <h1>Digital Lunchbox Admin</h1>
             <input type="password" id="password" placeholder="Enter password" />
             <button onclick="login()">Login</button>
