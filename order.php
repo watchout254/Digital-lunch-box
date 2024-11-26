@@ -167,7 +167,15 @@
                         <option value="Lemonade" data-price="100">Lemonade - KES 100</option>
                         <option value="Milkshake" data-price="150">Milkshake - KES 150</option>
                         <option value="Juice" data-price="120">Juice - KES 120</option>
-                        <option value="Mocktail" data-price="180">Mocktail - KES 180</option>
+                        <option value="Vanilla" data-price="300">Vanilla - KES 300</option>
+                        <option value="Strawberry" data-price="300">Strawberry - KES 300</option>
+                        <option value="Oreo" data-price="400">Oreo- KES 400</option>
+                        <option value="Chocolate" data-price="300">Chocolate - KES 300</option>
+                        <option value="Blueberry" data-price="300">Blueberry - KES 300</option>
+                        <option value="Iced Coffee" data-price="300">Iced Coffee - KES 300</option>
+                        <option value="Peach" data-price="400">Peach- KES 400</option>
+                        <option value="Mocha" data-price="300">Mocha- KES 300</option>
+                        <option value="Pina Colada" data-price="400">Pina Colada - KES 400</option>
                     </select>
                     <input type="number" class="drink-quantity" name="drink_quantity[]" min="1" value="1"
                         aria-label="Quantity">
@@ -240,6 +248,15 @@
                     <option value="Milkshake" data-price="150">Milkshake - KES 150</option>
                     <option value="Juice" data-price="120">Juice - KES 120</option>
                     <option value="Mocktail" data-price="180">Mocktail - KES 180</option>
+                    <option value="Vanilla" data-price="300">Vanilla - KES 300</option>
+                    <option value="Strawberry" data-price="300">Strawberry - KES 300</option>
+                    <option value="Oreo" data-price="300">Oreo - KES 400</option>
+                    <option value="Chocolate" data-price="300">Chocolate - KES 300</option>
+                    <option value="Blueberry" data-price="300">Blueberry - KES 300</option>
+                    <option value="Iced coffee" data-price="300">Iced coffee - KES 300</option>
+                    <option value="Peach" data-price="300">Peach - KES 400</option>
+                    <option value="Mocha" data-price="300">Mocha - KES 300</option>
+                    <option value="Pina Colada" data-price="400">Pina Colada - KES 400</option>
                 </select>
                 <input type="number" class="drink-quantity" name="drink_quantity[]" min="1" value="1" aria-label="Quantity">
             `;
