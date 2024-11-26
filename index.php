@@ -1062,6 +1062,159 @@
                                 class="fa-solid fa-cart-plus"></i></button>
                     </div>
                 </div>
+                <div class="col-12 col-md-4">
+                    <div class="menu-card p-3 mb-2">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIUus2obO0MgAxeh3JIK7MytubmMACB-nyug&s"
+                            class="menu-card-image" />
+                        <h1 class="menu-card-title">Vanilla</h1>
+                        <a class="menu-card-link">KES 300/= </a>
+                        <div class="menu-card-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Vanilla', 300)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="menu-card p-3 mb-2">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrisYYqAYlpU-uzwwYj_nTlHLSPJxLd_G4rQ&s"
+                            class="menu-card-image" />
+                        <h1 class="menu-card-title">Strawberry</h1>
+                        <a class="menu-card-link">KES 300/= </a>
+                        <div class="menu-card-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Strawberry', 300)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="menu-card p-3 mb-2">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaq1XoJcujwTXGZlcNepmfYfwhu2m_C_K7sA&s"
+                            class="menu-card-image" />
+                        <h1 class="menu-card-title">Oreo</h1>
+                        <a class="menu-card-link">KES 400/= </a>
+                        <div class="menu-card-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Oreo', 400)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="menu-card p-3 mb-2">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI1ypL4ZO9Lk8JySHOmuh8XK00yT_dtZ024w&s"
+                            class="menu-card-image" />
+                        <h1 class="menu-card-title">Chocolate</h1>
+                        <a class="menu-card-link">KES 300/= </a>
+                        <div class="menu-card-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Chocolate', 300)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="menu-card p-3 mb-2">
+                        <img src="https://img.freepik.com/premium-photo/blueberry-milkshake-plastic-takeaway-cup_1287624-25330.jpg"
+                            class="menu-card-image" />
+                        <h1 class="menu-card-title">Blueberry</h1>
+                        <a class="menu-card-link">KES 300/= </a>
+                        <div class="menu-card-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Blueberry', 300)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="menu-card p-3 mb-2">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrTCNKIABHdQRwDa_4OWaQUWXnkN8G6ziRhQ&s"
+                            class="menu-card-image" />
+                        <h1 class="menu-card-title">Iced Coffee</h1>
+                        <a class="menu-card-link">KES 300/= </a>
+                        <div class="menu-card-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Iced Coffee', 300)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="menu-card p-3 mb-2">
+                        <img src="https://www.thespruceeats.com/thmb/rGYG5xgvaLAm2qNkQGKv6NE91so=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/homemade-peach-milkshake-recipe-1945698-hero-01-cc8ab015d760494aa09684ef199e46d1.jpg"
+                            class="menu-card-image" />
+                        <h1 class="menu-card-title">Peach</h1>
+                        <a class="menu-card-link">KES 300/= </a>
+                        <div class="menu-card-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Peach', 300)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="menu-card p-3 mb-2">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7H-LQUOQa_UkpLxlCQyuwixXdBz9sWUSF4w&s"
+                            class="menu-card-image" />
+                        <h1 class="menu-card-title">Mocha</h1>
+                        <a class="menu-card-link">KES 300/= </a>
+                        <div class="menu-card-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Mocha', 300)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="menu-card p-3 mb-2">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO6MryNND_G0Nt1QHT2uXozXPxiQz3OpFtWk9poshIEYgYZEwUjmqFS2NggnAKYG85Ddk&usqp=CAU"
+                            class="menu-card-image" />
+                        <h1 class="menu-card-title">Pina Colada</h1>
+                        <a class="menu-card-link">KES 300/= </a>
+                        <div class="menu-card-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('Pina Colada', 300)"> Add to Cart <i
+                                class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
